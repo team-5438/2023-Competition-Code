@@ -96,7 +96,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    m_robotContainer.m_drivetrain.arcadeDrive(m_robotContainer.driveController.getLeftY(), m_robotContainer.driveController.getRightX());
   }
+
 
   @Override
   public void testInit() {

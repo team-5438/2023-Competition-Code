@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID;
 //subsystems
 // TODO: Add subsystems  <06-01-23, jeremy> //
-// TODO: Ignore Jeremy ^ - fedor
+// Fedor isn't here to help.
 //commands
 import frc.robot.commands.DefaultDrive;
 import frc.robot.subsystems.drivetrain;
