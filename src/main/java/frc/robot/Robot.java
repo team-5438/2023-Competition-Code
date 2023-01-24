@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import java.io.Console;
+
 import edu.wpi.first.wpilibj.Encoder;
 
 /**
@@ -100,8 +102,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		if (encoder.getDistance() < 5) {
+      System.out.print("Autonomous ran.");
 			// Drives forward 5 ft.
-			m_robotContainer.m_drivetrain.arcadeDrive(0.5, 0);
+			m_robotContainer.m_drivetrain.arcadeDrive(1, 0);
 		}
 	}
 
@@ -121,8 +124,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		m_robotContainer.m_drivetrain.arcadeDrive(m_robotContainer.driveController.getLeftY(),
-				m_robotContainer.driveController.getRightX());
+		m_robotContainer.m_drivetrain.arcadeDrive(m_robotContainer.getFwdAxis()/13,
+				m_robotContainer.getTurnAxis()/13);
 	}
 
 	@Override
