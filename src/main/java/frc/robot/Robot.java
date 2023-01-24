@@ -10,7 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.drivetrain;
+
 import edu.wpi.first.wpilibj.Encoder;
 
 /**
@@ -41,6 +41,8 @@ public class Robot extends TimedRobot {
 		// and put our
 		// autonomous chooser on the dashboard.
 		m_robotContainer = new RobotContainer();
+    // Resets encoder in case counting has already begun.
+    encoder.reset();
 		// 1ft per rotation (256 rotations)
 		encoder.setDistancePerPulse(1. / 256.);
 	}
