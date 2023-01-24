@@ -65,12 +65,12 @@ public class RobotContainer {
 
 	// fightstickLBButton.whileHeld(new LimelightTurretAim(m_turret));
 
-	private double getFwdAxis() {
-		return driveController.getRightY();
+	public double getFwdAxis() {
+		return driveController.getLeftX();
 	}
 
-	private double getTurnAxis() {
-		return driveController.getRightX();
+	public double getTurnAxis() {
+		return driveController.getLeftY();
 	}
 
 	/**
