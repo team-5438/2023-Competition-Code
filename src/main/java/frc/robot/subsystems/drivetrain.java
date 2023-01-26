@@ -14,9 +14,11 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.Encoder;
 
 public class drivetrain extends SubsystemBase {
 
+	Encoder encoder = new Encoder(0, 1);
 	// define Spark Maxes with IDs and as brushless controllers
 	private final CANSparkMax backLeft = new CANSparkMax(Constants.BACK_LEFT_SPARKMAX_ID, MotorType.kBrushless);
 	private final CANSparkMax frontLeft = new CANSparkMax(Constants.FRONT_LEFT_SPARKMAX_ID, MotorType.kBrushless);
@@ -39,6 +41,13 @@ public class drivetrain extends SubsystemBase {
 
 	public void arcadeDrive(double fwd, double rot) {
 		drive.arcadeDrive(fwd, -rot);
+	}
+
+	public void encoderDrive(double dist) {
+		if (encoder.getDistance() < dist) {
+			// Drives forward 5 ft.
+			arcadeDrive(0.5, 0);
+		}
 	}
 
 	public void curvatureDrive(double fwd, double rot, boolean isQuickTurn) {
