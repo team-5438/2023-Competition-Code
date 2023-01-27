@@ -9,21 +9,26 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 
+
+
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Encoder;
 
 public class drivetrain extends SubsystemBase {
 
-	Encoder encoder = new Encoder(0, 1);
+	
+	;
 	// define Spark Maxes with IDs and as brushless controllers
-	private final CANSparkMax backLeft = new CANSparkMax(Constants.BACK_LEFT_SPARKMAX_ID, MotorType.kBrushless);
-	private final CANSparkMax frontLeft = new CANSparkMax(Constants.FRONT_LEFT_SPARKMAX_ID, MotorType.kBrushless);
-	private final CANSparkMax backRight = new CANSparkMax(Constants.BACK_RIGHT_SPARKMAX_ID, MotorType.kBrushless);
-	private final CANSparkMax frontRight = new CANSparkMax(Constants.FRONT_RIGHT_SPARKMAX_ID, MotorType.kBrushless);
+	public final CANSparkMax backLeft = new CANSparkMax(Constants.BACK_LEFT_SPARKMAX_ID, MotorType.kBrushless);
+	public final CANSparkMax frontLeft = new CANSparkMax(Constants.FRONT_LEFT_SPARKMAX_ID, MotorType.kBrushless);
+	public final CANSparkMax backRight = new CANSparkMax(Constants.BACK_RIGHT_SPARKMAX_ID, MotorType.kBrushless);
+	public final CANSparkMax frontRight = new CANSparkMax(Constants.FRONT_RIGHT_SPARKMAX_ID, MotorType.kBrushless);
+	public RelativeEncoder encoder;
 
 	// define left and right side controller groups
 	MotorControllerGroup m_left = new MotorControllerGroup(frontLeft, backLeft);
@@ -31,12 +36,19 @@ public class drivetrain extends SubsystemBase {
 
 	// define drive
 	private final DifferentialDrive drive = new DifferentialDrive(m_left, m_right);
+	
+
 
 	public drivetrain() {
 		backLeft.setOpenLoopRampRate(.2);
 		frontLeft.setOpenLoopRampRate(.2);
 		backRight.setOpenLoopRampRate(.2);
 		frontRight.setOpenLoopRampRate(.2);
+
+		encoder = backLeft.getEncoder();
+
+		// Resets encoder in case counting has already begun.
+	
 	}
 
 	public void arcadeDrive(double fwd, double rot) {
@@ -44,7 +56,7 @@ public class drivetrain extends SubsystemBase {
 	}
 
 	public void encoderDrive(double dist) {
-		if (encoder.getDistance() < dist) {
+		if (encoder.getPosition() < dist) {
 			// Drives forward 5 ft.
 			arcadeDrive(0.5, 0);
 		}

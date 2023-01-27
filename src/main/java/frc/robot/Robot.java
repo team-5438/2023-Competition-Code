@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import java.io.Console;
 
+
+import com.revrobotics.RelativeEncoder;
+
 import edu.wpi.first.wpilibj.Encoder;
 
 /**
@@ -28,9 +31,14 @@ public class Robot extends TimedRobot {
 	private Command m_autonomousCommand;
 	// Initializes encoder
 	// TODO: Name encoder as per function <23-01-23, slys> //
-	Encoder encoder = new Encoder(0, 1);
+	
 
 	private RobotContainer m_robotContainer;
+
+	public RelativeEncoder encoderBackLeft;
+	public RelativeEncoder encoderBackRight;
+	public RelativeEncoder encoderFrontLeft;
+	public RelativeEncoder encoderFrontRight;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -43,10 +51,21 @@ public class Robot extends TimedRobot {
 		// and put our
 		// autonomous chooser on the dashboard.
 		m_robotContainer = new RobotContainer();
+		encoderBackLeft = m_robotContainer.m_drivetrain.backLeft.getEncoder();
+		encoderBackRight = m_robotContainer.m_drivetrain.backRight.getEncoder();
+		encoderFrontLeft = m_robotContainer.m_drivetrain.frontLeft.getEncoder();
+		encoderFrontRight = m_robotContainer.m_drivetrain.frontRight.getEncoder();
+
     // Resets encoder in case counting has already begun.
-    encoder.reset();
+    encoderBackLeft.setPosition(0);
+    encoderBackRight.setPosition(0);
+    encoderFrontLeft.setPosition(0);
+    encoderFrontRight.setPosition(0);
 		// 1ft per rotation (256 rotations)
-		encoder.setDistancePerPulse(1. / 256.);
+	encoderBackLeft.setPositionConversionFactor(1. / 256.);
+    encoderBackRight.setPositionConversionFactor(1. / 256.);
+    encoderFrontLeft.setPositionConversionFactor(1. / 256.);
+    encoderFrontRight.setPositionConversionFactor(1. / 256.);
 	}
 
 	/**
@@ -101,11 +120,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		if (encoder.getDistance() < 5) {
-      System.out.print("Autonomous ran.");
-			// Drives forward 5 ft.
-			m_robotContainer.m_drivetrain.arcadeDrive(1, 0);
-		}
+		m_robotContainer.m_drivetrain.encoderDrive(50);
 	}
 
 	@Override
