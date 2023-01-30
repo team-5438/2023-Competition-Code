@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.*;
 
 import java.io.Console;
 
@@ -37,6 +38,7 @@ public class Robot extends TimedRobot {
 	public RelativeEncoder encoderBackRight;
 	public RelativeEncoder encoderFrontLeft;
 	public RelativeEncoder encoderFrontRight;
+	public Limelight limelight;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -53,6 +55,8 @@ public class Robot extends TimedRobot {
 		encoderBackRight = m_robotContainer.m_drivetrain.backRight.getEncoder();
 		encoderFrontLeft = m_robotContainer.m_drivetrain.frontLeft.getEncoder();
 		encoderFrontRight = m_robotContainer.m_drivetrain.frontRight.getEncoder();
+		limelight = new Limelight();
+		limelight.getValues();
 
 		// Resets encoder in case counting has already begun.
 		encoderBackLeft.setPosition(0);

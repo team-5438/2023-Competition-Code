@@ -16,7 +16,6 @@ public class Limelight {
 		tx = table.getEntry("tx");
 		ty = table.getEntry("ty");
 		ta = table.getEntry("ta");
-
 	}
 
 	double x = tx.getDouble(0.0);
