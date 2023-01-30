@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import java.io.Console;
 
-
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -31,7 +30,6 @@ public class Robot extends TimedRobot {
 	private Command m_autonomousCommand;
 	// Initializes encoder
 	// TODO: Name encoder as per function <23-01-23, slys> //
-	
 
 	private RobotContainer m_robotContainer;
 
@@ -56,16 +54,16 @@ public class Robot extends TimedRobot {
 		encoderFrontLeft = m_robotContainer.m_drivetrain.frontLeft.getEncoder();
 		encoderFrontRight = m_robotContainer.m_drivetrain.frontRight.getEncoder();
 
-    // Resets encoder in case counting has already begun.
-    encoderBackLeft.setPosition(0);
-    encoderBackRight.setPosition(0);
-    encoderFrontLeft.setPosition(0);
-    encoderFrontRight.setPosition(0);
+		// Resets encoder in case counting has already begun.
+		encoderBackLeft.setPosition(0);
+		encoderBackRight.setPosition(0);
+		encoderFrontLeft.setPosition(0);
+		encoderFrontRight.setPosition(0);
 		// 1ft per rotation (256 rotations)
-	encoderBackLeft.setPositionConversionFactor(1. / 256.);
-    encoderBackRight.setPositionConversionFactor(1. / 256.);
-    encoderFrontLeft.setPositionConversionFactor(1. / 256.);
-    encoderFrontRight.setPositionConversionFactor(1. / 256.);
+		encoderBackLeft.setPositionConversionFactor(1. / 256.);
+		encoderBackRight.setPositionConversionFactor(1. / 256.);
+		encoderFrontLeft.setPositionConversionFactor(1. / 256.);
+		encoderFrontRight.setPositionConversionFactor(1. / 256.);
 	}
 
 	/**
@@ -139,8 +137,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		m_robotContainer.m_drivetrain.arcadeDrive(m_robotContainer.getFwdAxis()/13,
-				m_robotContainer.getTurnAxis()/13);
+		m_robotContainer.m_drivetrain.arcadeDrive(m_robotContainer.getFwdAxis() / 13,
+				m_robotContainer.getTurnAxis() / 13);
 	}
 
 	@Override
