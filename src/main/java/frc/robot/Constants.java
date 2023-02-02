@@ -31,6 +31,8 @@ public final class Constants {
 	public static final int Y_BUTTON_PORT = 4;
 	public static final int LB_BUTTON_PORT = 5;
 	public static final int RB_BUTTON_PORT = 6;
+	public static final double XOffset = 0;
+	public static final double YOffset = 12;
 
 	//sensor ids
 	public static final int LEFT_LIMIT_ID = 1;

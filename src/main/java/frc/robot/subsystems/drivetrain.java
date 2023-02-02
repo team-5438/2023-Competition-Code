@@ -56,9 +56,14 @@ public class drivetrain extends SubsystemBase {
 	}
 
 	public void encoderDrive(double dist) {
-		if (encoder.getPosition() < dist) {
-			// Drives forward 5 ft.
-			arcadeDrive(0.5, 0);
+		while(encoder.getPosition() < 50){
+			arcadeDrive(0, 0.25);
+		}
+	}
+
+	public void encoderDockDrive(double llY){
+		while(llY != Constants.YOffset){
+			arcadeDrive(0, 0.1);
 		}
 	}
 
