@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.deser.AbstractDeserializer;
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Encoder;
 
 /**
@@ -60,6 +61,7 @@ public class Robot extends TimedRobot {
 		encoderFrontRight = m_robotContainer.m_drivetrain.frontRight.getEncoder();
 		limelight = new Limelight();
 		limelight.getValues();
+		limelight.table.getInstance().startServer();
 
 
 
