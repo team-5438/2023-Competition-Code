@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -37,4 +39,16 @@ public final class Constants {
 	//sensor ids
 	public static final int LEFT_LIMIT_ID = 1;
 	public static final int RIGHT_LIMIT_ID = 0;
+	// Other fedor-esque stuff
+	public static final double ksVolts = 12.0;
+	public static final double kvVoltSecondsPerMeter = 0.1667;
+	public static final double kaVoltSecondsSquaredPerMeter = 0.0417;
+	public static final double kP = 0.1;
+	public static final double kI = 0.001;
+	public static final double kD = 0.05;
+    public static final double kMaxSpeedMetersPerSecond = 0.75;
+	public static final double kMaxAccelerationMetersPerSecondSquared = 0.75;
+    public static final double kRamseteB = 0.125;
+	public static final double kRamseteZeta = 0.85;
+	public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(0.5588);
 }

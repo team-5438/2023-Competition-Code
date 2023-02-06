@@ -9,19 +9,17 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 
-
-
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.Encoder;
 
 public class drivetrain extends SubsystemBase {
 
-	
 	;
 	// define Spark Maxes with IDs and as brushless controllers
 	public final CANSparkMax backLeft = new CANSparkMax(Constants.BACK_LEFT_SPARKMAX_ID, MotorType.kBrushless);
@@ -36,8 +34,6 @@ public class drivetrain extends SubsystemBase {
 
 	// define drive
 	private final DifferentialDrive drive = new DifferentialDrive(m_left, m_right);
-	
-
 
 	public drivetrain() {
 		backLeft.setOpenLoopRampRate(.2);
@@ -48,21 +44,46 @@ public class drivetrain extends SubsystemBase {
 		encoder = backLeft.getEncoder();
 
 		// Resets encoder in case counting has already begun.
-	
+
 	}
 
 	public void arcadeDrive(double fwd, double rot) {
 		drive.arcadeDrive(fwd, -rot);
 	}
 
+	// Getter functions
+	public Encoder getBackRightEncoder() {
+		return (Encoder) backRight.getEncoder();
+	}
+
+	public Encoder getBackLeftEncoder() {
+		return (Encoder) backLeft.getEncoder();
+	}
+
+	public Encoder getFrontRightEncoder() {
+		return (Encoder) frontRight.getEncoder();
+	}
+
+	public Encoder getFrontLeftEncoder() {
+		return (Encoder) frontLeft.getEncoder();
+	}
+	public class WheelSpeeds {
+	}
+	public double leftWheelSpeed() {
+		return getBackLeftEncoder().getRate();
+	}
+	public double rightWheelSpeed() {
+		return getBackRightEncoder().getRate();
+	}
+
 	public void encoderDrive(double dist) {
-		while(encoder.getPosition() < 50){
+		while (encoder.getPosition() < 50) {
 			arcadeDrive(0, 0.25);
 		}
 	}
 
-	public void encoderDockDrive(double llY){
-		while(llY != Constants.YOffset){
+	public void encoderDockDrive(double llY) {
+		while (llY != Constants.YOffset) {
 			arcadeDrive(0, 0.1);
 		}
 	}
