@@ -2,36 +2,30 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.*;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
-
 import java.util.Arrays;
+import java.util.function.Supplier;
 
 import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.subsystems.drivetrain;
-import frc.robot.Constants;
+
 
 
 public class AutonomousDrivetrain {
     private final drivetrain m_drive;
     private final Limelight m_limelight;
-    private final Pose2d pose;
+    private Supplier<Pose2d> pose;
     private final DifferentialDriveOdometry m_odometry;
     private final PIDController m_leftController = new PIDController(Constants.kP, Constants.kI, Constants.kD);
     private final PIDController m_rightController = new PIDController(Constants.kP, Constants.kI, Constants.kD);
@@ -50,7 +44,7 @@ public class AutonomousDrivetrain {
     }
   
     public void periodic() {
-      m_odometry.update(Rotation2d.fromDegrees(getHeading()), 		m_drive.getBackLeftEncoder().getDistance(),
+      m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_drive.getBackLeftEncoder().getDistance(),
           m_drive.getBackRightEncoder().getDistance());
     }
   
@@ -70,22 +64,14 @@ public class AutonomousDrivetrain {
         config
     );
   
-    RamseteCommand ramseteCommand = new RamseteCommand(trajectory, pose, null, m_feedforward, null, null, m_leftController, m_rightController, null, null)
-    new RamseteCommand(
-      trajectory,
-      m_drive::getPose,
-      new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta),
-      m_feedforward,
-      Constants.kDriveKinematics,
-      m_drive::getWheelSpeeds,
-      m_leftController,
-      m_rightController,
-      m_drive::tankDriveVolts,
-      m_drive
-  );
+    RamseteCommand ramseteCommand = new RamseteCommand(trajectory, pose, null, m_feedforward, null, null, m_leftController, m_rightController, null, null);
     return new ObstacleAvoidanceCommand(ramseteCommand, m_drive, m_limelight);
   }
   
+  public Pose3d getPose() {
+    return new Pose3d(pose.get());
+  }
+
   private double getHeading() {
     return Math.IEEEremainder(m_drive.getGyro().getAngle(), 360) * (Constants.kGyroReversed ? -1.0 : 1.0);
   }

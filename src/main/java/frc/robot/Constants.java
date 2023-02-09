@@ -51,4 +51,6 @@ public final class Constants {
     public static final double kRamseteB = 0.125;
 	public static final double kRamseteZeta = 0.85;
 	public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(0.5588);
+    public static boolean kGyroReversed;
+	public static final double kLimelightHeight = 1; // TODO: measure height of limelight
 }

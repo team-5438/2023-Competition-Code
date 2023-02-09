@@ -12,11 +12,21 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import java.util.function.Supplier;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.I2C.Port;
 
 public class drivetrain extends SubsystemBase {
 
@@ -27,6 +37,7 @@ public class drivetrain extends SubsystemBase {
 	public final CANSparkMax backRight = new CANSparkMax(Constants.BACK_RIGHT_SPARKMAX_ID, MotorType.kBrushless);
 	public final CANSparkMax frontRight = new CANSparkMax(Constants.FRONT_RIGHT_SPARKMAX_ID, MotorType.kBrushless);
 	public RelativeEncoder encoder;
+	private final AHRS gyro;
 
 	// define left and right side controller groups
 	MotorControllerGroup m_left = new MotorControllerGroup(frontLeft, backLeft);
@@ -43,12 +54,18 @@ public class drivetrain extends SubsystemBase {
 
 		encoder = backLeft.getEncoder();
 
+		
+			gyro = new AHRS(Port.kMXP);
+		
+
+		
+
 		// Resets encoder in case counting has already begun.
 
 	}
 
-	public void arcadeDrive(double fwd, double rot) {
-		drive.arcadeDrive(fwd, -rot);
+	public void arcadeDrive(double fwd, double rotation) {
+		drive.arcadeDrive(fwd, -rotation);
 	}
 
 	// Getter functions
@@ -58,6 +75,9 @@ public class drivetrain extends SubsystemBase {
 
 	public Encoder getBackLeftEncoder() {
 		return (Encoder) backLeft.getEncoder();
+	}
+	public final AHRS getGyro() {
+		return gyro;
 	}
 
 	public Encoder getFrontRightEncoder() {
@@ -99,5 +119,9 @@ public class drivetrain extends SubsystemBase {
 	@Override
 	public void periodic() {
 		// This method will be called once per scheduler run
+	}
+
+	public Supplier<Pose2d> getPose() {
+		return () -> new DifferentialDriveOdometry(null, 0, 0).getPoseMeters();
 	}
 }

@@ -23,12 +23,11 @@ public class Limelight {
         NetworkTableEntry tx = table.getEntry("tx");
         NetworkTableEntry ty = table.getEntry("ty");
         NetworkTableEntry ta = table.getEntry("ta"); 
-
         //read values periodically
         x = tx.getDouble(0.0);
         y = ty.getDouble(0.0);
         area = ta.getDouble(0.0);
-        z = Math.sqrt(x*x*y*y);
+        z = Math.sqrt((x*x)+(y*y));
 
         //post to smart dashboard periodically
         SmartDashboard.putNumber("LimelightX", x);
@@ -40,6 +39,8 @@ public class Limelight {
     	pipelineEntry.setNumber(pipeline);
     }
     final public double getDistance() {
-        return Math.sqrt(x*x*y*y*z*z);
+        
+        return Math.sqrt((x*x)+(y*y)+(z*z));
+
     }
 }

@@ -9,7 +9,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.wpilibj.GenericHID;
+import frc.robot.commands.AutonomousDrivetrain;
+import frc.robot.subsystems.*;
 //subsystems
 // TODO: Add subsystems  <06-01-23, jeremy> //
 // Fedor isn't here to help.
@@ -35,10 +38,14 @@ public class RobotContainer {
 	// define subsystems
 	drivetrain m_drivetrain = new drivetrain();
 
+	Limelight limelight;
+
+	AutonomousDrivetrain autodrive;
+
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
 	 */
-	public RobotContainer() {
+	public RobotContainer(Limelight ll) {
 
 		// Configure the button bindings
 		configureButtonBindings();
@@ -49,6 +56,11 @@ public class RobotContainer {
 						m_drivetrain,
 						() -> getFwdAxis(),
 						() -> getTurnAxis()));
+		
+		limelight = ll;
+
+		autodrive = new AutonomousDrivetrain(m_drivetrain, limelight);
+		
 	}
 
 	/**
@@ -78,8 +90,13 @@ public class RobotContainer {
 	 *
 	 * @return the command to run in autonomous
 	 */
-	public Command getAutonomousCommand() {
+	public Command getAutoAlignCommand() {
 		// An ExampleCommand will run in autonomous
-		return null;
+		AprilTag apriltag = new AprilTag(1,autodrive.getPose());
+
+		Command autoalign = autodrive.getAutonomousCommand(apriltag);
+
+		return autoalign;
+
 	}
 }
