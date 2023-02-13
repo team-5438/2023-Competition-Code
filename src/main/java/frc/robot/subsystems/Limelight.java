@@ -32,6 +32,7 @@ public class Limelight {
 		y = ty.getDouble(0.0);
 		area = ta.getDouble(0.0);
 		z = Math.sqrt((x * x) + (y * y));
+		// TODO: Change x, y, and z to lengths instead of angle measures
 
 		// post to smart dashboard periodically
 		SmartDashboard.putNumber("LimelightX", x);
@@ -45,8 +46,6 @@ public class Limelight {
 	}
 
 	final public double getDistance() {
-
 		return Math.sqrt((x * x) + (y * y) + (z * z));
-
 	}
 }

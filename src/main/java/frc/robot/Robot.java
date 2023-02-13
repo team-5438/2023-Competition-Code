@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.AutonomousDrivetrain;
 import edu.wpi.first.apriltag.*;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.Arm;
 
 import java.io.Console;
 
@@ -45,6 +46,7 @@ public class Robot extends TimedRobot {
 	public RelativeEncoder encoderFrontLeft;
 	public RelativeEncoder encoderFrontRight;
 	public Limelight limelight;
+	public Arm arm;
 
 	public AutonomousDrivetrain autodrive;
 
@@ -62,6 +64,7 @@ public class Robot extends TimedRobot {
 		limelight = new Limelight();
 		limelight.getValues();
 		limelight.table.getInstance().startServer();
+		arm = new Arm();
 
 		m_robotContainer = new RobotContainer(limelight);
 
@@ -74,8 +77,6 @@ public class Robot extends TimedRobot {
 		limelight.table.getInstance().startServer();
 
 		autodrive = new AutonomousDrivetrain(m_robotContainer.m_drivetrain, m_robotContainer.limelight);
-
-
 
 		// Resets encoder in case counting has already begun.
 		encoderBackLeft.setPosition(0);
@@ -110,7 +111,7 @@ public class Robot extends TimedRobot {
 		// robot's periodic
 		// block in order for anything in the Command-based framework to work.
 		CommandScheduler.getInstance().run();
-		
+
 	}
 
 	/**
@@ -142,10 +143,11 @@ public class Robot extends TimedRobot {
 	 * This function is called periodically during autonomous.
 	 */
 	@Override
-	public void autonomousPeriodic() {	
+	public void autonomousPeriodic() {
 		CommandScheduler.getInstance().run();
+		Arm.pivotArm(0.5);
 
-		//m_robotContainer.m_drivetrain.encoderDockDrive(y);
+		// m_robotContainer.m_drivetrain.encoderDockDrive(y);
 	}
 
 	@Override

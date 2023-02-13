@@ -10,21 +10,27 @@ package frc.robot;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants.  This class should not be used for any other purpose.  All constants should be
- * declared globally (i.e. public static).  Do not put anything functional in this class.
+ * The Constants class provides a convenient place for teams to hold robot-wide
+ * numerical or boolean
+ * constants. This class should not be used for any other purpose. All constants
+ * should be
+ * declared globally (i.e. public static). Do not put anything functional in
+ * this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+ * <p>
+ * It is advised to statically import this class (or one of its inner classes)
+ * wherever the
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-	//motor controller ids
+	// motor controller ids
 	public static final int BACK_LEFT_SPARKMAX_ID = 1;
 	public static final int FRONT_LEFT_SPARKMAX_ID = 2;
 	public static final int BACK_RIGHT_SPARKMAX_ID = 3;
 	public static final int FRONT_RIGHT_SPARKMAX_ID = 4;
-	
-	//controller ids
+	public static final int PIVOT_MOTOR_SPARKMAX_ID = 5;
+
+	// controller ids
 	public static final int DRIVER_CONTROLLER_PORT = 3;
 	public static final int FIGHTSTICK_PORT = 1;
 	public static final int A_BUTTON_PORT = 1;
@@ -36,7 +42,7 @@ public final class Constants {
 	public static final double XOffset = 0;
 	public static final double YOffset = 12;
 
-	//sensor ids
+	// sensor ids
 	public static final int LEFT_LIMIT_ID = 1;
 	public static final int RIGHT_LIMIT_ID = 0;
 	// Other fedor-esque stuff
@@ -46,11 +52,11 @@ public final class Constants {
 	public static final double kP = 0.1;
 	public static final double kI = 0.001;
 	public static final double kD = 0.05;
-    public static final double kMaxSpeedMetersPerSecond = 0.75;
+	public static final double kMaxSpeedMetersPerSecond = 0.75;
 	public static final double kMaxAccelerationMetersPerSecondSquared = 0.75;
-    public static final double kRamseteB = 0.125;
+	public static final double kRamseteB = 0.125;
 	public static final double kRamseteZeta = 0.85;
 	public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(0.5588);
-    public static boolean kGyroReversed;
+	public static boolean kGyroReversed;
 	public static final double kLimelightHeight = 1; // TODO: measure height of limelight
 }
