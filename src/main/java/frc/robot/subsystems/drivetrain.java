@@ -24,9 +24,11 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C.Port;
+import frc.robot.subsystems.Limelight;
 
 public class drivetrain extends SubsystemBase {
 
@@ -54,11 +56,7 @@ public class drivetrain extends SubsystemBase {
 
 		encoder = backLeft.getEncoder();
 
-		
-			gyro = new AHRS(Port.kMXP);
-		
-
-		
+		gyro = new AHRS(Port.kMXP);
 
 		// Resets encoder in case counting has already begun.
 
@@ -76,6 +74,7 @@ public class drivetrain extends SubsystemBase {
 	public Encoder getBackLeftEncoder() {
 		return (Encoder) backLeft.getEncoder();
 	}
+
 	public final AHRS getGyro() {
 		return gyro;
 	}
@@ -87,11 +86,14 @@ public class drivetrain extends SubsystemBase {
 	public Encoder getFrontLeftEncoder() {
 		return (Encoder) frontLeft.getEncoder();
 	}
+
 	public class WheelSpeeds {
 	}
+
 	public double leftWheelSpeed() {
 		return getBackLeftEncoder().getRate();
 	}
+
 	public double rightWheelSpeed() {
 		return getBackRightEncoder().getRate();
 	}
@@ -124,4 +126,5 @@ public class drivetrain extends SubsystemBase {
 	public Supplier<Pose2d> getPose() {
 		return () -> new DifferentialDriveOdometry(null, 0, 0).getPoseMeters();
 	}
+
 }
