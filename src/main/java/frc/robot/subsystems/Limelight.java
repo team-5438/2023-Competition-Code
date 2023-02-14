@@ -7,7 +7,9 @@ import edu.wpi.first.networktables.NetworkTablesJNI;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableValue;
+import frc.robot.subsystems.*;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import org.photonvision.PhotonCamera;
 import edu.wpi.first.math.geometry.Pose2d;
 import java.util.function.Supplier;
@@ -48,4 +50,10 @@ public class Limelight {
 	final public double getDistance() {
 		return Math.sqrt((x * x) + (y * y) + (z * z));
 	}
+
+	// final public Supplier<Pose2d> getPose() {
+	// double[] poseArray = table.getEntry("botpose").getDoubleArray(new double[6]);
+	// return () -> new DifferentialDriveOdometry(null, , ).getPoseMeters();
+	// // TODO: Test these values out
+	// }
 }

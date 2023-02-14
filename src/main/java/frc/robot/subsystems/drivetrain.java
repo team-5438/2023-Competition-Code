@@ -12,6 +12,7 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.*;
 
 import java.util.function.Supplier;
 
@@ -40,6 +41,7 @@ public class drivetrain extends SubsystemBase {
 	public final CANSparkMax frontRight = new CANSparkMax(Constants.FRONT_RIGHT_SPARKMAX_ID, MotorType.kBrushless);
 	public RelativeEncoder encoder;
 	private final AHRS gyro;
+	public Robot robot = new Robot();
 
 	// define left and right side controller groups
 	MotorControllerGroup m_left = new MotorControllerGroup(frontLeft, backLeft);
@@ -124,7 +126,9 @@ public class drivetrain extends SubsystemBase {
 	}
 
 	public Supplier<Pose2d> getPose() {
-		return () -> new DifferentialDriveOdometry(null, 0, 0).getPoseMeters();
+		return () -> new DifferentialDriveOdometry(null, robot.encoderBackLeft.getPosition(),
+				robot.encoderBackRight.getPosition()).getPoseMeters();
+		// TODO: Test these values out
 	}
 
 }

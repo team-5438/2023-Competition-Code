@@ -88,7 +88,6 @@ public class Robot extends TimedRobot {
 		encoderBackRight.setPositionConversionFactor(1. / 256.);
 		encoderFrontLeft.setPositionConversionFactor(1. / 256.);
 		encoderFrontRight.setPositionConversionFactor(1. / 256.);
-
 	}
 
 	/**
