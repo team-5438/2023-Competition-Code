@@ -168,6 +168,8 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		m_robotContainer.m_drivetrain.arcadeDrive(m_robotContainer.getFwdAxis() / 13,
 				m_robotContainer.getTurnAxis() / 13);
+
+		m_robotContainer.arm.pivotArm(m_robotContainer.getPivotSpeed());
 	}
 
 	@Override

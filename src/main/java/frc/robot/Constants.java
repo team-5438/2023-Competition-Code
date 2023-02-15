@@ -32,6 +32,7 @@ public final class Constants {
 
 	// controller ids
 	public static final int DRIVER_CONTROLLER_PORT = 3;
+	public static final int OPERATOR_CONTROLLER_PORT = 4;
 	public static final int FIGHTSTICK_PORT = 1;
 	public static final int A_BUTTON_PORT = 1;
 	public static final int B_BUTTON_PORT = 2;

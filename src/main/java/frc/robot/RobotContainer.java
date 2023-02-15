@@ -33,6 +33,8 @@ public class RobotContainer {
 	// define controllers
 	Joystick driveController = new Joystick(Constants.DRIVER_CONTROLLER_PORT);
 
+	Joystick operatorController = new Joystick(Constants.OPERATOR_CONTROLLER_PORT);
+
 	// define subsystems
 	drivetrain m_drivetrain = new drivetrain();
 
@@ -78,12 +80,17 @@ public class RobotContainer {
 	// fightstickLBButton.whileHeld(new LimelightTurretAim(m_turret));
 
 	public double getFwdAxis() {
-		return driveController.getLeftX();
+		return driveController.getX();
 	}
 
 	public double getTurnAxis() {
-		return driveController.getLeftY();
+		return driveController.getY();
 	}
+
+	public double getPivotSpeed() {
+		return operatorController.getY();
+	}
+
 
 	/**
 	 * Use this to pass the autonomous command to the main {@link Robot} class.
