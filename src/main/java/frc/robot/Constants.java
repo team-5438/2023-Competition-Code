@@ -42,6 +42,9 @@ public final class Constants {
 	public static final double XOffset = 0;
 	public static final double YOffset = 12;
 
+	public static final double kTestAprilTagHeight = 22.9;
+	public static final double kRobotHeight = 43;
+
 	// sensor ids
 	public static final int LEFT_LIMIT_ID = 1;
 	public static final int RIGHT_LIMIT_ID = 0;

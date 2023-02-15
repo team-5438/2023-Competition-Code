@@ -48,7 +48,8 @@ public class Limelight {
 	}
 
 	final public double getDistance() {
-		return Math.sqrt((x * x) + (y * y) + (z * z));
+		double distance = (Constants.kTestAprilTagHeight - Constants.kRobotHeight) / Math.tan(y);
+		return distance;
 	}
 
 	// final public Supplier<Pose2d> getPose() {
