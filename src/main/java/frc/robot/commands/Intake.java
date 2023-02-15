@@ -9,9 +9,14 @@ import frc.robot.Constants;
 public class Intake extends CommandBase {
   public final CANSparkMax LeftMotor = new CANSparkMax(Constants.kLeftIntakeMotor);
   public final CANSparkMax RightMotor = new CANSparkMax(Constants.kRightIntakeMotor);
-  Joystick controller = new Joystick(Constants.DRIVER_CONTROLLER_PORT);
 
+  public MotorControllerGroup = new MotorControllerGroup(LeftMotor, RightMotor);
   public void IntakeCommand()
+  {
+    
+  }
+
+  public void ReleaseCommand()
   {
     
   }
