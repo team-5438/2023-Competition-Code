@@ -8,9 +8,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.commands.AutonomousDrivetrain;
 //subsystems
 import frc.robot.subsystems.*;
@@ -31,7 +31,7 @@ import frc.robot.subsystems.drivetrain;
 
 public class RobotContainer {
 	// define controllers
-	XboxController driveController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
+	Joystick driveController = new Joystick(Constants.DRIVER_CONTROLLER_PORT);
 
 	// define subsystems
 	drivetrain m_drivetrain = new drivetrain();
