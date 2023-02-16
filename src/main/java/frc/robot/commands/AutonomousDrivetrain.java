@@ -23,7 +23,7 @@ import frc.robot.subsystems.drivetrain;
 public class AutonomousDrivetrain {
 	private final drivetrain m_drive;
 	private final Limelight m_limelight;
-	private Supplier<Pose2d> pose;
+	private Supplier<Pose2d> poseSupplier;
 	private final DifferentialDriveOdometry m_odometry;
 	private final PIDController m_leftController = new PIDController(Constants.kP, Constants.kI, Constants.kD);
 	private final PIDController m_rightController = new PIDController(Constants.kP, Constants.kI, Constants.kD);
@@ -34,6 +34,7 @@ public class AutonomousDrivetrain {
 		m_drive = drive;
 		m_limelight = limelight;
 		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()), 0, 0);
+		poseSupplier = limelight.getPose();
 	}
 
 	public void resetOdometry(Pose2d pose) {
@@ -61,13 +62,13 @@ public class AutonomousDrivetrain {
 				new Pose2d(m_limelight.getDistance() - 5, 0, Rotation2d.fromDegrees(m_limelight.x)),
 				config);
 
-		RamseteCommand ramseteCommand = new RamseteCommand(trajectory, pose, null, m_feedforward, null, null,
-				m_leftController, m_rightController, null, null);
+		RamseteCommand ramseteCommand = new RamseteCommand(trajectory, poseSupplier, null, m_feedforward, Constants.kDriveKinematics, null,
+				m_leftController, m_rightController, null);
 		return new ObstacleAvoidanceCommand(ramseteCommand, m_drive, m_limelight);
 	}
 
 	public Pose3d getPose() {
-		return new Pose3d(pose.get());
+		return new Pose3d(poseSupplier.get());
 	}
 
 	private double getHeading() {

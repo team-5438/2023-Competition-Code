@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.AutonomousDrivetrain;
 //subsystems
 import frc.robot.subsystems.*;
@@ -33,7 +34,7 @@ public class RobotContainer {
 	// define controllers
 	Joystick driveController = new Joystick(Constants.DRIVER_CONTROLLER_PORT);
 
-	Joystick operatorController = new Joystick(Constants.OPERATOR_CONTROLLER_PORT);
+	XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
 
 	// define subsystems
 	drivetrain m_drivetrain = new drivetrain();
@@ -88,7 +89,7 @@ public class RobotContainer {
 	}
 
 	public double getPivotSpeed() {
-		return operatorController.getY();
+		return operatorController.getLeftY();
 	}
 
 

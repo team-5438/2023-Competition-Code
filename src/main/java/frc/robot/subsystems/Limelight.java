@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTablesJNI;
@@ -11,8 +12,15 @@ import frc.robot.subsystems.*;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import org.photonvision.PhotonCamera;
+
+import com.revrobotics.RelativeEncoder;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import java.util.function.Supplier;
+import com.kauailabs.navx.frc.AHRS;
+
+import frc.robot.subsystems.drivetrain; 
+
 
 public class Limelight {
 	public NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -24,6 +32,19 @@ public class Limelight {
 	public double x;
 	public double y;
 	public double area;
+
+    public RelativeEncoder leftEncoder;
+    public RelativeEncoder rightEncoder;
+    public drivetrain dtrain;
+    public AHRS gyro;
+
+    public Limelight(drivetrain drive){
+        dtrain = drive;
+        leftEncoder = drive.leftEncoder;
+        rightEncoder = drive.rightEncoder;
+
+        gyro = drive.getGyro();
+    }
 
 	final public void getValues() {
 		NetworkTableEntry tx = table.getEntry("tx");
@@ -52,9 +73,9 @@ public class Limelight {
 		return distance;
 	}
 
-	// final public Supplier<Pose2d> getPose() {
-	// double[] poseArray = table.getEntry("botpose").getDoubleArray(new double[6]);
-	// return () -> new DifferentialDriveOdometry(null, , ).getPoseMeters();
-	// // TODO: Test these values out
-	// }
+	final public Supplier<Pose2d> getPose() {
+	 double[] poseArray = table.getEntry("botpose").getDoubleArray(new double[6]);
+	 return () -> new DifferentialDriveOdometry(gyro.getRotation2d(),leftEncoder.getPosition(),rightEncoder.getPosition()).getPoseMeters();
+	 // TODO: Test these values out
+	 }
 }

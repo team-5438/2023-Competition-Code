@@ -39,7 +39,8 @@ public class drivetrain extends SubsystemBase {
 	public final CANSparkMax frontLeft = new CANSparkMax(Constants.FRONT_LEFT_SPARKMAX_ID, MotorType.kBrushless);
 	public final CANSparkMax backRight = new CANSparkMax(Constants.BACK_RIGHT_SPARKMAX_ID, MotorType.kBrushless);
 	public final CANSparkMax frontRight = new CANSparkMax(Constants.FRONT_RIGHT_SPARKMAX_ID, MotorType.kBrushless);
-	public RelativeEncoder encoder;
+	public RelativeEncoder leftEncoder;
+	public RelativeEncoder rightEncoder;
 	private final AHRS gyro;
 	public Robot robot = new Robot();
 
@@ -56,7 +57,8 @@ public class drivetrain extends SubsystemBase {
 		backRight.setOpenLoopRampRate(.2);
 		frontRight.setOpenLoopRampRate(.2);
 
-		encoder = backLeft.getEncoder();
+		leftEncoder = backLeft.getEncoder();
+		rightEncoder = backRight.getEncoder();
 
 		gyro = new AHRS(Port.kMXP);
 
@@ -101,7 +103,7 @@ public class drivetrain extends SubsystemBase {
 	}
 
 	public void encoderDrive(double dist) {
-		while (encoder.getPosition() < 50) {
+		while (leftEncoder.getPosition() < 50) {
 			arcadeDrive(0, 0.25);
 		}
 	}
