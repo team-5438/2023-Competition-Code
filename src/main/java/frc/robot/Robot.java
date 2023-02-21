@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
 	public Intake intake;
 
 	public double currentVoltage;
-	public double[] averageVoltage;
+	public double[] voltages;
 	int num;
 
 	/**
@@ -93,7 +93,7 @@ public class Robot extends TimedRobot {
 		encoderFrontLeft.setPositionConversionFactor(1. / 256.);
 		encoderFrontRight.setPositionConversionFactor(1. / 256.);
 
-		averageVoltage = new double[100];
+		voltages = new double[100];
 	}
 
 	/**
@@ -118,23 +118,22 @@ public class Robot extends TimedRobot {
 		CommandScheduler.getInstance().run();
 
 		num++;
-		if (num == averageVoltage.length)
+		if (num == voltages.length) {
 			num = 0;
+		}
 
 		currentVoltage = ((intake.LeftMotor.getBusVoltage() + intake.RightMotor.getBusVoltage()) / 2);
 		// averageVoltage.add(currentVoltage);
-		averageVoltage[num] = currentVoltage;
-		for (int i = 0; i < averageVoltage.length - 1; i++)
-			if (i == averageVoltage.length - 1)
-			{
+		voltages[num] = currentVoltage;
+		for (int i = 0; i < voltages.length - 1; i++)
+			if (i == voltages.length - 1) {
 				double meanVoltage = 0;
-				for (int n = 0; n < averageVoltage.length - 1; n++)
-				{
-					meanVoltage += averageVoltage[n];
+				for (int n = 0; n < voltages.length - 1; n++) {
+					meanVoltage += voltages[n];
 				}
-				meanVoltage /= averageVoltage.length;
-				averageVoltage = new double[averageVoltage.length];
-				averageVoltage[0] = meanVoltage;
+				meanVoltage /= voltages.length;
+				voltages = new double[voltages.length];
+				voltages[0] = meanVoltage;
 			}
 
 	}

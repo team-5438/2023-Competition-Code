@@ -20,34 +20,29 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 // This class should be responsible for taking in objects and releasing them.
 public class Intake extends CommandBase {
-  public final CANSparkMax LeftMotor = new CANSparkMax(Constants.kLeftIntakeMotor, MotorType.kBrushless);
-  public final CANSparkMax RightMotor = new CANSparkMax(Constants.kRightIntakeMotor, MotorType.kBrushless);
+	public final CANSparkMax LeftMotor = new CANSparkMax(Constants.kLeftIntakeMotor, MotorType.kBrushless);
+	public final CANSparkMax RightMotor = new CANSparkMax(Constants.kRightIntakeMotor, MotorType.kBrushless);
 
-  public Robot robot = new Robot();
-  
-  public void setNumber(double input)
-  {
-    
-  }
-  
-  public final XboxController controller = new 
-  XboxController(Constants.OPERATOR_CONTROLLER_PORT);
+	public Robot robot = new Robot();
 
-  public MotorControllerGroup motorControllerGroup = new MotorControllerGroup(LeftMotor, RightMotor);
-  public void IntakeCommand()
-  {
-    if (controller.getBButtonPressed())
-    {
-      while ((robot.currentVoltage) < 3)
-      {
-        LeftMotor.set(-0.65);
-        RightMotor.set(-0.65); // placeholders
-      }
-    }
-  }
+	public void setNumber(double input) {
 
-  public void ReleaseCommand()
-  {
-    
-  }
+	}
+
+	public final XboxController controller = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
+
+	public MotorControllerGroup motorControllerGroup = new MotorControllerGroup(LeftMotor, RightMotor);
+
+	public void IntakeCommand() {
+		if (controller.getBButtonPressed()) {
+			while ((robot.currentVoltage) < 3) {
+				LeftMotor.set(-0.65);
+				RightMotor.set(-0.65); // placeholders
+			}
+		}
+	}
+
+	public void ReleaseCommand() {
+
+	}
 }
