@@ -15,6 +15,7 @@ import frc.robot.commands.AutonomousDrivetrain;
 import edu.wpi.first.apriltag.*;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Arm;
+import frc.robot.commands.*;
 
 import java.io.Console;
 
@@ -49,6 +50,11 @@ public class Robot extends TimedRobot {
 	public Arm arm;
 
 	public AutonomousDrivetrain autodrive;
+	public Intake intake;
+
+	public double currentVoltage;
+	public double[] averageVoltage;
+	int num;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -74,6 +80,7 @@ public class Robot extends TimedRobot {
 		encoderFrontRight = m_robotContainer.m_drivetrain.frontRight.getEncoder();
 
 		autodrive = new AutonomousDrivetrain(m_robotContainer.m_drivetrain, m_robotContainer.limelight);
+		intake = new Intake();
 
 		// Resets encoder in case counting has already begun.
 		encoderBackLeft.setPosition(0);
@@ -85,6 +92,8 @@ public class Robot extends TimedRobot {
 		encoderBackRight.setPositionConversionFactor(1. / 256.);
 		encoderFrontLeft.setPositionConversionFactor(1. / 256.);
 		encoderFrontRight.setPositionConversionFactor(1. / 256.);
+
+		averageVoltage = new double[100];
 	}
 
 	/**
@@ -107,6 +116,26 @@ public class Robot extends TimedRobot {
 		// robot's periodic
 		// block in order for anything in the Command-based framework to work.
 		CommandScheduler.getInstance().run();
+
+		num++;
+		if (num == averageVoltage.length)
+			num = 0;
+
+		currentVoltage = ((intake.LeftMotor.getBusVoltage() + intake.RightMotor.getBusVoltage()) / 2);
+		// averageVoltage.add(currentVoltage);
+		averageVoltage[num] = currentVoltage;
+		for (int i = 0; i < averageVoltage.length - 1; i++)
+			if (i == averageVoltage.length - 1)
+			{
+				double meanVoltage = 0;
+				for (int n = 0; n < averageVoltage.length - 1; n++)
+				{
+					meanVoltage += averageVoltage[n];
+				}
+				meanVoltage /= averageVoltage.length;
+				averageVoltage = new double[averageVoltage.length];
+				averageVoltage[0] = meanVoltage;
+			}
 
 	}
 
