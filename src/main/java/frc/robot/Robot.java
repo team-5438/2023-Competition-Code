@@ -56,6 +56,13 @@ public class Robot extends TimedRobot {
 	public double[] voltages;
 	int num;
 
+  public Robot() 
+  {
+    addPeriodic(() -> {
+      getVoltages();  
+    }, 0.01);
+  }
+
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any
@@ -117,7 +124,13 @@ public class Robot extends TimedRobot {
 		// block in order for anything in the Command-based framework to work.
 		CommandScheduler.getInstance().run();
 
-		num++;
+		
+
+	}
+
+  public bool getVoltages()
+  {
+    num++;
 		if (num == voltages.length) {
 			num = 0;
 		}
@@ -134,9 +147,13 @@ public class Robot extends TimedRobot {
 				meanVoltage /= voltages.length;
 				voltages = new double[voltages.length];
 				voltages[0] = meanVoltage;
+        double percent = 0.5;
+        if (currentVoltage > (meanVoltage + (meanVoltage * percent)))
+          return true;
+        else
+          return false;
 			}
-
-	}
+  }
 
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
