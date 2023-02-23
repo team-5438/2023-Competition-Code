@@ -38,6 +38,11 @@ public class Intake extends CommandBase {
 
 	public MotorControllerGroup motorControllerGroup = new MotorControllerGroup(LeftMotor, RightMotor);
 
+  public Intake()
+  {
+    timer.reset();    
+  }
+  
 	public void IntakeCommand() {
 		if (controller.getBButton() && !trigger)
     {
