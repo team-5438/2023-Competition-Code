@@ -10,6 +10,7 @@ import edu.wpi.first.math.MathUtil;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 // TODO: Get current voltage at set rate in Robot.java
@@ -22,27 +23,53 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 public class Intake extends CommandBase {
 	public final CANSparkMax LeftMotor = new CANSparkMax(Constants.kLeftIntakeMotor, MotorType.kBrushless);
 	public final CANSparkMax RightMotor = new CANSparkMax(Constants.kRightIntakeMotor, MotorType.kBrushless);
+  public bool trigger;
+  int releaseTime;
 
 	public Robot robot = new Robot();
+  public Timer timer = new Timer();
 
 	public void setNumber(double input) {
 
 	}
-
+  // if trigger = false, item is not held
+  // if trigger = true, item is held
 	public final XboxController controller = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
 
 	public MotorControllerGroup motorControllerGroup = new MotorControllerGroup(LeftMotor, RightMotor);
 
 	public void IntakeCommand() {
-		if (controller.getBButtonPressed()) {
-			while ((robot.currentVoltage) < 3) {
-				LeftMotor.set(-0.65);
-				RightMotor.set(-0.65); // placeholders
-			}
+		if (controller.getBButton() && !trigger)
+    {
+      LeftMotor.set(-0.65);
+      RightMotor.set(-0.65);
+		}
+
+    if (!controller.getBButton() && trigger)
+    {
+      LeftMotor.set(-0.15);
+      RightMotor.set(-0.15);
+    }
+    
 		}
 	}
 
-	public void ReleaseCommand() {
-
+	public void ReleaseCommand()
+  {
+    if (controller.getBButton() && trigger)
+    {
+      timer.start();
+      if (timer.get() < releaseTime)
+      {
+        LeftMotor.set(0.65);
+        RightMotor.set(0.65);
+      }
+      if (timer.get() >= releaseTime)
+      {
+        timer.stop();
+        timer.restart();
+      }
+    }
+    
 	}
 }

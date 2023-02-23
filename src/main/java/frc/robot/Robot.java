@@ -123,9 +123,6 @@ public class Robot extends TimedRobot {
 		// robot's periodic
 		// block in order for anything in the Command-based framework to work.
 		CommandScheduler.getInstance().run();
-
-		
-
 	}
 
   public bool getVoltages()
@@ -153,6 +150,11 @@ public class Robot extends TimedRobot {
         else
           return false;
 			}
+  }
+
+  public bool isVoltageSpike()
+  {
+    
   }
 
 	/**
