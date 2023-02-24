@@ -73,6 +73,7 @@ public class Intake extends CommandBase {
       {
         timer.stop();
         timer.restart();
+        trigger = false;
       }
     }
     

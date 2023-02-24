@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
   public Robot() 
   {
     addPeriodic(() -> {
-      getVoltages();  
+      isVoltageSpike();  
     }, 0.01);
   }
 
@@ -154,7 +154,10 @@ public class Robot extends TimedRobot {
 
   public bool isVoltageSpike()
   {
-    
+    if (getVoltages())
+    {
+      Intake.trigger = true;
+    }
   }
 
 	/**
