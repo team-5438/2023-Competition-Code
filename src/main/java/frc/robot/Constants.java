@@ -29,6 +29,9 @@ public final class Constants {
   public static final int BACK_RIGHT_SPARKMAX_ID = 3;
   public static final int FRONT_RIGHT_SPARKMAX_ID = 4;
   public static final int PIVOT_MOTOR_SPARKMAX_ID = 5;
+  public static final int EXTENDER_MOTOR_SPARKMAX_ID = 6;
+  public static final int HANDLEFT_MOTOR_SPARKMAX_ID = 7; // ITS CALLED HAND, CHANGE THIS AND I WILL KILL YOU - love, fedor <3
+  public static final int HANDRIGHT_MOTOR_SPARKMAX_ID = 8;
 
 	// controller ids
 	public static final int DRIVER_CONTROLLER_PORT = 3;
@@ -63,6 +66,6 @@ public final class Constants {
   public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(0.5588);
   public static boolean kGyroReversed;
   public static final double kLimelightHeight = 1; // TODO: measure height of limelight
-  public static final double kLeftIntakeMotor = 7;
-  public static final double kRightIntakeMotor = 8;
+  public static final int kLeftIntakeMotor = 7;
+  public static final int kRightIntakeMotor = 8;
 }
