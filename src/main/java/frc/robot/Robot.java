@@ -15,6 +15,7 @@ import frc.robot.commands.AutonomousDrivetrain;
 import edu.wpi.first.apriltag.*;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Arm;
+import frc.robot.commands.*;
 
 import java.io.Console;
 
@@ -49,6 +50,18 @@ public class Robot extends TimedRobot {
 	public Arm arm;
 
 	public AutonomousDrivetrain autodrive;
+	public Intake intake;
+
+	public double currentVoltage;
+	public double[] voltages;
+	int num;
+
+  public Robot() 
+  {
+    addPeriodic(() -> {
+      isVoltageSpike();  
+    }, 0.01);
+  }
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -74,6 +87,7 @@ public class Robot extends TimedRobot {
 		encoderFrontRight = m_robotContainer.m_drivetrain.frontRight.getEncoder();
 
 		autodrive = new AutonomousDrivetrain(m_robotContainer.m_drivetrain, m_robotContainer.limelight);
+		intake = new Intake();
 
 		// Resets encoder in case counting has already begun.
 		encoderBackLeft.setPosition(0);
@@ -85,6 +99,8 @@ public class Robot extends TimedRobot {
 		encoderBackRight.setPositionConversionFactor(1. / 256.);
 		encoderFrontLeft.setPositionConversionFactor(1. / 256.);
 		encoderFrontRight.setPositionConversionFactor(1. / 256.);
+
+		voltages = new double[100];
 	}
 
 	/**
@@ -107,8 +123,42 @@ public class Robot extends TimedRobot {
 		// robot's periodic
 		// block in order for anything in the Command-based framework to work.
 		CommandScheduler.getInstance().run();
-
 	}
+
+  public bool getVoltages()
+  {
+    num++;
+		if (num == voltages.length) {
+			num = 0;
+		}
+
+		currentVoltage = ((intake.LeftMotor.getBusVoltage() + intake.RightMotor.getBusVoltage()) / 2);
+		// averageVoltage.add(currentVoltage);
+		voltages[num] = currentVoltage;
+		for (int i = 0; i < voltages.length - 1; i++)
+			if (i == voltages.length - 1) {
+				double meanVoltage = 0;
+				for (int n = 0; n < voltages.length - 1; n++) {
+					meanVoltage += voltages[n];
+				}
+				meanVoltage /= voltages.length;
+				voltages = new double[voltages.length];
+				voltages[0] = meanVoltage;
+        double percent = 0.5;
+        if (currentVoltage > (meanVoltage + (meanVoltage * percent)))
+          return true;
+        else
+          return false;
+			}
+  }
+
+  public bool isVoltageSpike()
+  {
+    if (getVoltages())
+    {
+      Intake.trigger = true;
+    }
+  }
 
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
