@@ -125,7 +125,7 @@ public class Robot extends TimedRobot {
 		CommandScheduler.getInstance().run();
 	}
 
-  public bool getVoltages()
+  public boolean getVoltages()
   {
     num++;
 		if (num == voltages.length) {
@@ -152,11 +152,11 @@ public class Robot extends TimedRobot {
 			}
   }
 
-  public bool isVoltageSpike()
+  public void isVoltageSpike()
   {
     if (getVoltages())
     {
-      Intake.trigger = true;
+      intake.trigger = true;
     }
   }
 

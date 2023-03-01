@@ -78,4 +78,9 @@ public class Limelight {
 	 return () -> new DifferentialDriveOdometry(gyro.getRotation2d(),leftEncoder.getPosition(),rightEncoder.getPosition()).getPoseMeters();
 	 // TODO: Test these values out
 	 }
+
+  public void AutoAlign()
+  {
+    
+  }
 }

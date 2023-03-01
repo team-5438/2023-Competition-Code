@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 public class Intake extends CommandBase {
 	public final CANSparkMax LeftMotor = new CANSparkMax(Constants.kLeftIntakeMotor, MotorType.kBrushless);
 	public final CANSparkMax RightMotor = new CANSparkMax(Constants.kRightIntakeMotor, MotorType.kBrushless);
-  public bool trigger;
+  public boolean trigger;
   int releaseTime;
 
 	public Robot robot = new Robot();
