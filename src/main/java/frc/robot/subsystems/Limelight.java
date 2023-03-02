@@ -38,13 +38,16 @@ public class Limelight {
     public drivetrain dtrain;
     public AHRS gyro;
 
-    public Limelight(drivetrain drive){
-        dtrain = drive;
+    public Limelight(){
+    }
+
+	public void setDrivetrain(drivetrain drive){
+		dtrain = drive;
         leftEncoder = drive.leftEncoder;
         rightEncoder = drive.rightEncoder;
 
         gyro = drive.getGyro();
-    }
+	}
 
 	final public void getValues() {
 		NetworkTableEntry tx = table.getEntry("tx");

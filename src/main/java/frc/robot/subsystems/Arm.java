@@ -30,8 +30,10 @@ public class Arm extends PIDSubsystem {
 
 	public void pivotArm(double speed) {
 			pivotMotor.set(MathUtil.applyDeadband(speed, 0.02));
+
+		}
 		// 1 = forward, -1 = backwards
-	}
+	
 
 	public void extendArm(double speed){
 		extenderMotor.set(MathUtil.applyDeadband(speed, 0.05));

@@ -72,12 +72,13 @@ public class Robot extends TimedRobot {
 		// and put our
 		// autonomous chooser on the dashboard.
 
-		limelight = new Limelight(m_robotContainer.m_drivetrain);
+		limelight = new Limelight();
 		limelight.getValues();
 		limelight.table.getInstance().startServer();
 		//arm = new Arm();
 
 		m_robotContainer = new RobotContainer(limelight);
+		limelight.setDrivetrain(m_robotContainer.m_drivetrain);
 
 		encoderBackLeft = m_robotContainer.m_drivetrain.backLeft.getEncoder();
 		encoderBackRight = m_robotContainer.m_drivetrain.backRight.getEncoder();
