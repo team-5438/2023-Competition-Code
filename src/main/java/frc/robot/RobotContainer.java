@@ -92,6 +92,10 @@ public class RobotContainer {
 		return operatorController.getLeftY();
 	}
 
+	public double getExtenderSpeed(){
+		return operatorController.getLeftX();
+	}
+
 
 	/**
 	 * Use this to pass the autonomous command to the main {@link Robot} class.

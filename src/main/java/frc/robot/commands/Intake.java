@@ -56,7 +56,6 @@ public class Intake extends CommandBase {
       RightMotor.set(-0.15);
     }
     
-		}
 	}
 
 	public void ReleaseCommand()
@@ -72,7 +71,7 @@ public class Intake extends CommandBase {
       if (timer.get() >= releaseTime)
       {
         timer.stop();
-        timer.restart();
+        timer.reset();
         trigger = false;
       }
     }

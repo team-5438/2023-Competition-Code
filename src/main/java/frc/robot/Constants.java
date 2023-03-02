@@ -23,7 +23,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-<<<<<<< HEAD
+
   // motor controller ids
   public static final int BACK_LEFT_SPARKMAX_ID = 1;
   public static final int FRONT_LEFT_SPARKMAX_ID = 2;
@@ -33,14 +33,7 @@ public final class Constants {
   public static final int EXTENDER_MOTOR_SPARKMAX_ID = 6;
   public static final int HANDLEFT_MOTOR_SPARKMAX_ID = 7; // ITS CALLED HAND, CHANGE THIS AND I WILL KILL YOU - love, fedor <3
   public static final int HANDRIGHT_MOTOR_SPARKMAX_ID = 8;
-=======
-	// motor controller ids
-	public static final int BACK_LEFT_SPARKMAX_ID = 1;
-	public static final int FRONT_LEFT_SPARKMAX_ID = 2;
-	public static final int BACK_RIGHT_SPARKMAX_ID = 3;
-	public static final int FRONT_RIGHT_SPARKMAX_ID = 4;
-	public static final int PIVOT_MOTOR_SPARKMAX_ID = 5;
->>>>>>> 52051b69f711f896482a90ee637bc139e427901b
+
 
 	// controller ids
 	public static final int DRIVER_CONTROLLER_PORT = 3;
@@ -58,7 +51,7 @@ public final class Constants {
 	public static final double kTestAprilTagHeight = 22.9;
 	public static final double kRobotHeight = 43;
 
-<<<<<<< HEAD
+
   // sensor ids
   public static final int LEFT_LIMIT_ID = 1;
   public static final int RIGHT_LIMIT_ID = 0;
@@ -66,9 +59,9 @@ public final class Constants {
   public static final double ksVolts = 12.0;
   public static final double kvVoltSecondsPerMeter = 0.1667;
   public static final double kaVoltSecondsSquaredPerMeter = 0.0417;
-  public static final double kP = 0.1;
-  public static final double kI = 0.001;
-  public static final double kD = 0.05;
+  public static final double ArmkP = 0.1;
+  public static final double ArmkI = 0.001;
+  public static final double ArmkD = 0.05;
   public static final double kMaxSpeedMetersPerSecond = 0.75;
   public static final double kMaxAccelerationMetersPerSecondSquared = 0.75;
   public static final double kRamseteB = 0.125;
@@ -78,25 +71,5 @@ public final class Constants {
   public static final double kLimelightHeight = 1; // TODO: measure height of limelight
   public static final int kLeftIntakeMotor = 7;
   public static final int kRightIntakeMotor = 8;
-=======
-	// sensor ids
-	public static final int LEFT_LIMIT_ID = 1;
-	public static final int RIGHT_LIMIT_ID = 0;
-	// Other fedor-esque stuff
-	public static final double ksVolts = 12.0;
-	public static final double kvVoltSecondsPerMeter = 0.1667;
-	public static final double kaVoltSecondsSquaredPerMeter = 0.0417;
-	public static final double kP = 0.1;
-	public static final double kI = 0.001;
-	public static final double kD = 0.05;
-	public static final double kMaxSpeedMetersPerSecond = 0.75;
-	public static final double kMaxAccelerationMetersPerSecondSquared = 0.75;
-	public static final double kRamseteB = 0.125;
-	public static final double kRamseteZeta = 0.85;
-	public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(0.5588);
-	public static boolean kGyroReversed;
-	public static final double kLimelightHeight = 1; // TODO: measure height of limelight
-	public static final int kLeftIntakeMotor = 7;
-	public static final int kRightIntakeMotor = 8;
->>>>>>> 52051b69f711f896482a90ee637bc139e427901b
+  public static final int WRIST_MOTOR = 9;
 }

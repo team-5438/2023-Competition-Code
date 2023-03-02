@@ -58,9 +58,7 @@ public class Robot extends TimedRobot {
 
   public Robot() 
   {
-    addPeriodic(() -> {
-      isVoltageSpike();  
-    }, 0.01);
+    
   }
 
 	/**
@@ -77,7 +75,7 @@ public class Robot extends TimedRobot {
 		limelight = new Limelight(m_robotContainer.m_drivetrain);
 		limelight.getValues();
 		limelight.table.getInstance().startServer();
-		arm = new Arm();
+		//arm = new Arm();
 
 		m_robotContainer = new RobotContainer(limelight);
 
@@ -125,41 +123,6 @@ public class Robot extends TimedRobot {
 		CommandScheduler.getInstance().run();
 	}
 
-  public boolean getVoltages()
-  {
-    num++;
-		if (num == voltages.length) {
-			num = 0;
-		}
-
-		currentVoltage = ((intake.LeftMotor.getBusVoltage() + intake.RightMotor.getBusVoltage()) / 2);
-		// averageVoltage.add(currentVoltage);
-		voltages[num] = currentVoltage;
-		for (int i = 0; i < voltages.length - 1; i++)
-			if (i == voltages.length - 1) {
-				double meanVoltage = 0;
-				for (int n = 0; n < voltages.length - 1; n++) {
-					meanVoltage += voltages[n];
-				}
-				meanVoltage /= voltages.length;
-				voltages = new double[voltages.length];
-				voltages[0] = meanVoltage;
-        double percent = 0.5;
-        if (currentVoltage > (meanVoltage + (meanVoltage * percent)))
-          return true;
-        else
-          return false;
-			}
-  }
-
-  public void isVoltageSpike()
-  {
-    if (getVoltages())
-    {
-      intake.trigger = true;
-    }
-  }
-
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
 	 */
@@ -191,7 +154,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		CommandScheduler.getInstance().run();
-		Arm.pivotArm(0.5);
+		//Arm.pivotArm(0.5);
 
 		// m_robotContainer.m_drivetrain.encoderDockDrive(y);
 	}
@@ -217,6 +180,10 @@ public class Robot extends TimedRobot {
 				m_robotContainer.getTurnAxis() / 13);
 
 		m_robotContainer.arm.pivotArm(m_robotContainer.getPivotSpeed());
+
+		m_robotContainer.arm.extendArm(m_robotContainer.getExtenderSpeed()); 
+
+		
 	}
 
 	@Override

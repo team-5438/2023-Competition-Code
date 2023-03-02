@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -16,14 +17,14 @@ public class Arm extends PIDSubsystem {
 
 	static private final DutyCycleEncoder pivotEncoder = new DutyCycleEncoder(0);
 
-	private PIDController pivotPID;
+	private final SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(Constants.ksVolts, Constants.kvVoltSecondsPerMeter);
 	
 	public Arm(PIDController controller) {
 		super(controller);
 
-		pivotPID = controller;
+		getController().setIntegratorRange(-0.5, 0.5);
+		getController().setTolerance(1, 1);
 	}
-	static 
 	//static private DigitalInput topLimitSwitch = new DigitalInput(0);
 	//static private DigitalInput bottomLimitSwitch = new DigitalInput(0);
 
@@ -38,7 +39,7 @@ public class Arm extends PIDSubsystem {
 
 	@Override
 	protected void useOutput(double output, double setpoint) {
-		// TODO Auto-generated method stub
+		pivotMotor.set(getController().calculate(output,setpoint));
 		
 	}
 

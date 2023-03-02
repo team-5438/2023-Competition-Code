@@ -25,8 +25,8 @@ public class AutonomousDrivetrain {
 	private final Limelight m_limelight;
 	private Supplier<Pose2d> poseSupplier;
 	private final DifferentialDriveOdometry m_odometry;
-	private final PIDController m_leftController = new PIDController(Constants.kP, Constants.kI, Constants.kD);
-	private final PIDController m_rightController = new PIDController(Constants.kP, Constants.kI, Constants.kD);
+	private final PIDController m_leftController = new PIDController(Constants.ArmkP, Constants.ArmkI, Constants.ArmkD);
+	private final PIDController m_rightController = new PIDController(Constants.ArmkP, Constants.ArmkI, Constants.ArmkD);
 	private final SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(Constants.ksVolts,
 			Constants.kvVoltSecondsPerMeter, Constants.kaVoltSecondsSquaredPerMeter);
 
