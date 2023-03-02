@@ -18,12 +18,10 @@ public class Hand extends PIDSubsystem {
 
 	static private final CANSparkMax m_handleftMotor = new CANSparkMax(Constants.HANDLEFT_MOTOR_SPARKMAX_ID,MotorType.kBrushless);
     static private final CANSparkMax m_handrightMotor = new CANSparkMax(Constants.HANDRIGHT_MOTOR_SPARKMAX_ID,MotorType.kBrushless);
+	static private final CANSparkMax m_wristMotor = new CANSparkMax(Constants.WRIST_MOTOR, MotorType.kBrushless);
 
-	private final SimpleMotorFeedforward m_feedforward =
-      new SimpleMotorFeedforward(
-          Constants.ksVolts, Constants.kvVoltSecondsPerMeter);
+	private final SimpleMotorFeedforward m_feedforward =new SimpleMotorFeedforward(Constants.ksVolts, Constants.kvVoltSecondsPerMeter);
 
-	static private final DutyCycleEncoder armEncoder = new DutyCycleEncoder(0);
 	//static private DigitalInput topLimitSwitch = new DigitalInput(0);
 	//static private DigitalInput bottomLimitSwitch = new DigitalInput(0);
 
