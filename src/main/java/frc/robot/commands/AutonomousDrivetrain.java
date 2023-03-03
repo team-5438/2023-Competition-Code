@@ -67,6 +67,14 @@ public class AutonomousDrivetrain {
 		return new ObstacleAvoidanceCommand(ramseteCommand, m_drive, m_limelight);
 	}
 
+  public Command DriveInput(Translation2d[] points, Pose2d finalPos)
+  {
+    TrajectoryConfig config = new TrajectoryConfig(Constants.kMaxSpeedMetersPerSecond,
+				Constants.kMaxAccelerationMetersPerSecondSquared);
+    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(new Translation2d(0, 0), points, finalPos, config)
+  TrajectoryGeneratorGeneratorew ObstacleAvoidanceCommand();
+  }
+
 	public Pose3d getPose() {
 		return new Pose3d(poseSupplier.get());
 	}
