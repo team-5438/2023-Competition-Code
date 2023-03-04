@@ -133,4 +133,14 @@ public class drivetrain extends SubsystemBase {
 		// TODO: Test these values out
 	}
 
+  public double getTurnRate() // returns turn rate in degrees / second
+  {
+    return gyro.getRate() * (Constans.kGyroReversed ? -1 : 1);
+  }
+
+  public void zeroGyro()
+  {
+    gyro.reset();
+  }
+  
 }
