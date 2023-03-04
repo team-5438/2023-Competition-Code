@@ -67,14 +67,6 @@ public class AutonomousDrivetrain {
 		return new ObstacleAvoidanceCommand(ramseteCommand, m_drive, m_limelight);
 	}
 
-  public Command DriveInput(Translation2d[] points, Pose2d finalPos)
-  {
-    TrajectoryConfig config = new TrajectoryConfig(Constants.kMaxSpeedMetersPerSecond,
-				Constants.kMaxAccelerationMetersPerSecondSquared);
-    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(new Translation2d(0, 0), points, finalPos, config)
-  TrajectoryGeneratorGeneratorew ObstacleAvoidanceCommand();
-  }
-
 	public Pose3d getPose() {
 		return new Pose3d(poseSupplier.get());
 	}
@@ -82,4 +74,17 @@ public class AutonomousDrivetrain {
 	private double getHeading() {
 		return Math.IEEEremainder(m_drive.getGyro().getAngle(), 360) * (Constants.kGyroReversed ? -1.0 : 1.0);
 	}
+
+  void AutoAlign(AprilTag target)
+  {
+    if ()
+    double theta_x = limelight.tx;
+    // while (gyro.getAngle < theta_x)
+    //    turn drivetrain counterclockwise
+
+    // double theta_y = limelight.ty;
+    // distance = limelight.height * tan(theta_y)
+    
+    
+  }
 }

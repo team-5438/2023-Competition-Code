@@ -10,6 +10,8 @@ import java.util.*;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.*;
 
+
+// 
 public class AutoAlign
 {
   public AutonomousDrivetrain autoDrive;
@@ -17,7 +19,6 @@ public class AutoAlign
   public AHRS gyro;
   public Limelight limelight;
   double theta;
-  double alpha;
   double distance;
   double height;
 
@@ -31,13 +32,11 @@ public class AutoAlign
   public void Align()
   {
     // height = limelight. getHeight()
-    alpha = gyro.getAngle(); //Note: Angle can be more than 360 degrees. Try to reduce angle down to <90.
-    theta = 90 - alpha;
-    distance = height / Math.tan(theta);
-
-  
-    
-    autoDrive.DriveInput(points, finalPos)
+    /*1. FIND APRIL TAG PLEASE. angle = theta x
+      2. TURN BY theta x from global
+      3. OBTAIN theta y; do height * tan(theta y) and subtract a little bit*/
+    theta = 90 - gyro.getAngle();
+    distance = height * Math.tan(theta);
     
   }
   
