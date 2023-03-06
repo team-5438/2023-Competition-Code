@@ -82,8 +82,5 @@ public class Limelight {
 	 // TODO: Test these values out
 	 }
 
-  public void AutoAlign()
-  {
-    
-  }
+  
 }
