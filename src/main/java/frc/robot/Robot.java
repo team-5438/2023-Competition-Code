@@ -17,6 +17,7 @@ import edu.wpi.first.apriltag.*;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Arm;
 import frc.robot.commands.*;
+import edu.wpi.first.math.controller.PIDController;
 
 import java.io.Console;
 
@@ -26,6 +27,7 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Encoder;
+import com.kauailabs.navx.frc.AHRS;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -43,6 +45,7 @@ public class Robot extends TimedRobot {
   PIDController myPid = new PIDController(0.1, 0.05, 0.01); // Constants: Tune these values
   PIDSendable myPidSendable = new PIDSendable("My PID", myPid);
 	private RobotContainer m_robotContainer;
+  
 
 	public RelativeEncoder encoderBackLeft;
 	public RelativeEncoder encoderBackRight;
@@ -52,6 +55,8 @@ public class Robot extends TimedRobot {
 	public Arm arm;
 
 	public AutonomousDrivetrain autodrive;
+  public drivetrain drive;
+  public AHRS gyro;
 	public Intake intake;
 
 	public double currentVoltage;
@@ -193,9 +198,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		CommandScheduler.getInstance().run();
-		//Arm.pivotArm(0.5);
-
-		// m_robotContainer.m_drivetrain.encoderDockDrive(y);
+    // place object on L3 height
+    while (gyro.getAngle() < 180)
+    {
+      
+    }
+    // drive over charging stand
+    // go back behind
 	}
 
 	@Override

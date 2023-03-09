@@ -1,11 +1,9 @@
 package frc.robot.subsystems;
-package edu.wpi.first.util.sendable;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.util.sendable.SendableRegistry;
-import edu.wpi.first.util.sendable;
-import edu.wpi.first.math.controller.PIDController;
-
 
 public class PIDSendable implements Sendable
 {
@@ -20,8 +18,7 @@ public class PIDSendable implements Sendable
   }
 
   @Override
-  public void initSendable(SendableBuilder builder)
-  {
+  public void initSendable(SendableBuilder builder) {
     builder.setSmartDashboardType("PIDController");
     builder.setActuator(true);
     builder.setSafeState(() -> pid.reset());
