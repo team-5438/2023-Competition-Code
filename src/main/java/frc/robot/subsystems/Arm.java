@@ -16,12 +16,14 @@ public class Arm extends PIDSubsystem {
 	static private final CANSparkMax extenderMotor = new CANSparkMax(Constants.EXTENDER_MOTOR_SPARKMAX_ID, MotorType.kBrushless);
 
 	static private final DutyCycleEncoder pivotEncoder = new DutyCycleEncoder(0);
+  static private boolean ArmLimitReached;
 
 	private final SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(Constants.ksVolts, Constants.kvVoltSecondsPerMeter);
 	
 	public Arm(PIDController controller) {
 		super(controller);
-
+    pivotEncoder
+    pivotEncoder.reset();
 		getController().setIntegratorRange(-0.5, 0.5);
 		getController().setTolerance(1, 1);
 	}
