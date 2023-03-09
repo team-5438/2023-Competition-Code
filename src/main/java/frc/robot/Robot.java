@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -39,7 +40,8 @@ public class Robot extends TimedRobot {
 	private Command m_autonomousCommand;
 	// Initializes encoder
 	// TODO: Name encoder as per function <23-01-23, slys> //
-
+  PIDController myPid = new PIDController(0.1, 0.05, 0.01); // Constants: Tune these values
+  PIDSendable myPidSendable = new PIDSendable("My PID", myPid);
 	private RobotContainer m_robotContainer;
 
 	public RelativeEncoder encoderBackLeft;
@@ -228,9 +230,18 @@ public class Robot extends TimedRobot {
 		// Cancels all running commands at the start of test mode.
     // PID tune wrist & arm
 		CommandScheduler.getInstance().run();
-    LiveWindow lw = LiveWindow.getInstance();
-    DutyCycleEncoder wristEncoder = new DutyCycleEncoder();
-    lw.addActuator("Wrist", "Motor", );
+/*    LiveWindow lw = LiveWindow.getInstance();
+    DutyCycleEncoder wristEncoder = new DutyCycleEncoder(1);
+    DutyCycleEncoder armmEncoder = new DutyCycleEncoder();
+    lw.addSensor("Wrist", "Encoder", wristEncoder);
+    lw.addSensor("Arm", "Encoder", armEncoder);
+
+    CANSparkMax wristMotor = new CANSparkMax(9):
+    lw.addActuator("Wrist", "Motor", wristMotor);
+    CANSParkMax armMotor = new CANSParkMax();
+    lw.addActuator("Arm", "Motor", armMotor);
+
+  */  
 	}
 
 	/**
@@ -238,5 +249,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+    SmartDashboard.putData(myPidSendable);
 	}
 }
