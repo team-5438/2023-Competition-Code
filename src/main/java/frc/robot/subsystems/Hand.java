@@ -21,7 +21,7 @@ public class Hand extends PIDSubsystem {
 
 	private Compressor phCompressor = new Compressor(10,PneumaticsModuleType.REVPH); 
 
-	DoubleSolenoid doublePH = new DoubleSolenoid(PneumaticsModuleType.REVPH, 0, 1);
+	DoubleSolenoid doublePH = new DoubleSolenoid(PneumaticsModuleType.REVPH, 1, 2);
 
 
 	private final SimpleMotorFeedforward m_feedforward =new SimpleMotorFeedforward(Constants.ksVolts, Constants.kvVoltSecondsPerMeter);
