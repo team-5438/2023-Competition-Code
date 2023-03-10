@@ -8,9 +8,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutonomousDrivetrain;
 import edu.wpi.first.apriltag.*;
 import frc.robot.subsystems.*;
@@ -50,7 +54,6 @@ public class Robot extends TimedRobot {
 	public Arm arm;
 
 	public AutonomousDrivetrain autodrive;
-	public Intake intake;
 
 	public double currentVoltage;
 	public double[] voltages;
@@ -86,8 +89,6 @@ public class Robot extends TimedRobot {
 		encoderFrontRight = m_robotContainer.m_drivetrain.frontRight.getEncoder();
 
 		autodrive = new AutonomousDrivetrain(m_robotContainer.m_drivetrain, m_robotContainer.limelight);
-		intake = new Intake();
-
 		// Resets encoder in case counting has already begun.
 		encoderBackLeft.setPosition(0);
 		encoderBackRight.setPosition(0);
@@ -184,9 +185,24 @@ public class Robot extends TimedRobot {
 
 		m_robotContainer.arm.extendArm(m_robotContainer.getExtenderSpeed()); 
 
+		m_robotContainer.hand.moveWrist(m_robotContainer.getWristSpeed());
+
+		if (m_robotContainer.operatorController.getStartButtonPressed()){
+			m_robotContainer.changeMode();
+		}
+
+		if(m_robotContainer.operatorController.getYButtonPressed()){
+			m_robotContainer.hand.handRelease(m_robotContainer.cubeMode);
+		}
+
+		if(m_robotContainer.operatorController.getXButton()){
+			m_robotContainer.hand.handPull(m_robotContainer.cubeMode);
+		}
+
+		SmartDashboard.putBoolean("Mode", m_robotContainer.cubeMode);
+
 		
 	}
-
 	@Override
 	public void testInit() {
 		// Cancels all running commands at the start of test mode.

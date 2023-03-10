@@ -1,5 +1,15 @@
 {
   "HALProvider": {
+    "Addressable LEDs": {
+      "window": {
+        "visible": true
+      }
+    },
+    "DIO": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "SPARK MAX [1]": {
         "header": {
@@ -15,9 +25,19 @@
         "header": {
           "open": true
         }
+      }
+    },
+    "PWM Outputs": {
+      "window": {
+        "visible": true
+      }
+    },
+    "RoboRIO": {
+      "RoboRIO Input": {
+        "open": true
       },
       "window": {
-        "visible": false
+        "visible": true
       }
     },
     "Timing": {
@@ -34,7 +54,7 @@
     }
   },
   "NetworkTables": {
-    "Retained Values": {
+    "Transitory Values": {
       "open": false
     },
     "transitory": {
@@ -63,6 +83,12 @@
       "open": true
     },
     "Server": {
+      "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
+        "open": true
+      },
       "open": true
     }
   },

@@ -9,6 +9,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.apriltag.AprilTag;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -18,6 +21,9 @@ import frc.robot.subsystems.*;
 //commands
 import frc.robot.commands.DefaultDrive;
 import frc.robot.subsystems.drivetrain;
+
+
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -41,9 +47,20 @@ public class RobotContainer {
 
 	Limelight limelight;
 
-	Arm arm;
+	Arm arm = new Arm();
+	Hand hand = new Hand(new PIDController(Constants.WristP, Constants.WristI, Constants.WristD));
 
 	AutonomousDrivetrain autodrive;
+
+	AddressableLED sponsorStrip1;
+	AddressableLED sponsorStrip2;
+	AddressableLED electronicsStrip;
+
+	AddressableLEDBuffer sponsorStrip1Buffer;
+	AddressableLEDBuffer sponsorStrip2Buffer;
+	AddressableLEDBuffer electronicsStripBuffer;
+	
+	public boolean cubeMode = false; //0 is cone, 1 is cube
 
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -63,6 +80,17 @@ public class RobotContainer {
 		limelight = ll;
 
 		autodrive = new AutonomousDrivetrain(m_drivetrain, limelight);
+
+		sponsorStrip1 = new AddressableLED(Constants.SS1PWM);
+
+		sponsorStrip1Buffer = new AddressableLEDBuffer(Constants.SSLEN);
+
+		sponsorStrip1.setLength(sponsorStrip1Buffer.getLength());
+
+		sponsorStrip1.setData(sponsorStrip1Buffer);
+
+		sponsorStrip1.start();
+
 
 	}
 
@@ -96,6 +124,33 @@ public class RobotContainer {
 		return operatorController.getLeftX();
 	}
 
+	public double getWristSpeed(){
+		return operatorController.getRightY();
+	}
+
+	public void setStripColor(AddressableLED m_led, AddressableLEDBuffer m_ledbuffer,int r, int g, int b){
+		for (int i = 0; i < m_ledbuffer.getLength(); i++){
+			m_ledbuffer.setRGB(i, r, g, b);
+		}
+
+		m_led.setData(m_ledbuffer);
+	}
+
+	public void setLED(){
+		//setStripColor(electronicsStrip, electronicsStripBuffer, 255, 255, 0);
+		if(cubeMode){
+		setStripColor(sponsorStrip1, sponsorStrip1Buffer, 255, 0, 255);
+		}
+		else{
+			setStripColor(sponsorStrip1, sponsorStrip1Buffer, 255, 128, 0);
+		}
+		//setStripColor(sponsorStrip2, sponsorStrip2Buffer, 255, 255, 0);
+	}
+
+	public void changeMode(){
+		cubeMode = !cubeMode;
+		setLED();
+	}
 
 	/**
 	 * Use this to pass the autonomous command to the main {@link Robot} class.
