@@ -77,6 +77,7 @@ public class Arm extends ProfiledPIDSubsystem {
 
   private final CANSparkMax extender_motor = new CANSparkMax(Constants.EXTENDER_MOTOR_SPARKMAX_ID, MotorType.kBrushless);
 
+<<<<<<< HEAD
   private final DutyCycleEncoder m_encoder = new DutyCycleEncoder(ArmConstants.kEncoderPort);
   private final ArmFeedforward m_feedforward = new ArmFeedforward(Constants.ArmkS, Constants.ArmkG, Constants.ArmkV, Constants.ArmkA);
 
@@ -88,6 +89,22 @@ public class Arm extends ProfiledPIDSubsystem {
     // Start arm at rest in neutral position
     setGoal(ArmConstants.kArmOffsetRads);
   }
+=======
+	static private final DutyCycleEncoder pivotEncoder = new DutyCycleEncoder(0);
+  static private boolean ArmLimitReached;
+
+	private final SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(Constants.ksVolts, Constants.kvVoltSecondsPerMeter);
+	
+	public Arm(PIDController controller) {
+		super(controller);
+    pivotEncoder
+    pivotEncoder.reset();
+		getController().setIntegratorRange(-0.5, 0.5);
+		getController().setTolerance(1, 1);
+	}
+	//static private DigitalInput topLimitSwitch = new DigitalInput(0);
+	//static private DigitalInput bottomLimitSwitch = new DigitalInput(0);
+>>>>>>> 6d749da830d114c245f199b12b2ce275e64d230d
 
   public void pivotArm(double speed){
 	pivot_motor.set(MathUtil.applyDeadband(speed, 0.05));

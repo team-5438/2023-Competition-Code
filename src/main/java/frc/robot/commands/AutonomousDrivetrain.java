@@ -4,6 +4,7 @@ import frc.robot.subsystems.*;
 import frc.robot.Constants;
 import java.util.Arrays;
 import java.util.function.Supplier;
+import java.util.*;
 
 import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.math.controller.PIDController;
@@ -63,6 +64,7 @@ public class AutonomousDrivetrain {
 
 		RamseteCommand ramseteCommand = new RamseteCommand(trajectory, poseSupplier, null, m_feedforward, Constants.kDriveKinematics, null,
 				m_leftController, m_rightController, null);
+    // final Pos should be subtracted by a little bit
 		return new ObstacleAvoidanceCommand(ramseteCommand, m_drive, m_limelight);
 	}
 
@@ -73,4 +75,18 @@ public class AutonomousDrivetrain {
 	private double getHeading() {
 		return Math.IEEEremainder(m_drive.getGyro().getAngle(), 360) * (Constants.kGyroReversed ? -1.0 : 1.0);
 	}
+
+  /*void AutoAlign(AprilTag target)
+  {
+    double theta_x = m_limelight.tx;
+      while (Math.abs(gyro.getAngle() - theta_x) >= 5)
+      {
+        drivetrain.arcadeDrive(0, -0.65);
+      }
+      
+    double theta_y = m_limelight.ty;
+    distance = (limelight.height * Math.tan(theta_y)) * 0.95;
+    drivetrain.arcadeDrive(distance, 0);
+    
+  } */
 }

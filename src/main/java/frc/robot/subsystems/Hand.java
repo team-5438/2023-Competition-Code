@@ -23,12 +23,18 @@ public class Hand extends PIDSubsystem {
     private final CANSparkMax m_handrightMotor = new CANSparkMax(Constants.HANDRIGHT_MOTOR_SPARKMAX_ID,MotorType.kBrushless);
 	
 
+<<<<<<< HEAD
 	private final DutyCycleEncoder wristEncoder = new DutyCycleEncoder(1);
 
 	private final CANSparkMax m_handwristMotor = new CANSparkMax(Constants.WRIST_MOTOR, MotorType.kBrushless);
 	private final MotorControllerGroup m_hand = new MotorControllerGroup(m_handleftMotor, m_handrightMotor);
 	private Compressor phCompressor = new Compressor(10,PneumaticsModuleType.REVPH); 
 	DoubleSolenoid doublePH = new DoubleSolenoid(PneumaticsModuleType.REVPH, 0, 1);
+=======
+	private Compressor phCompressor = new Compressor(10,PneumaticsModuleType.REVPH); 
+
+	DoubleSolenoid doublePH = new DoubleSolenoid(PneumaticsModuleType.REVPH, 1, 2);
+>>>>>>> 6d749da830d114c245f199b12b2ce275e64d230d
 
 	ArmFeedforward aff = new ArmFeedforward(0,Constants.WristkG,Constants.WristkV, Constants.WristkA);
 	
