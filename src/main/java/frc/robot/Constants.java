@@ -85,6 +85,11 @@ public final class Constants {
   public static final double WristkG = 0.3;
   public static final double WristkV = 1.71;
   public static final double WristkA = 0.02;
+  
+  public static final double ExtenderkG = 1.3;
+  public static final double ExtenderkV = 2.3;
+  public static final double ExtenderkA = 0.1;
+
 
 
   public static final double kMaxSpeedMetersPerSecond = 0.75;

@@ -26,8 +26,8 @@ public class PIDSendable implements Sendable
     builder.addDoubleProperty("i", pid::getI, pid::setI);
     builder.addDoubleProperty("d", pid::getD, pid::setD);
     builder.addDoubleProperty("setpoint", pid::getSetpoint, pid::setSetpoint);
-    builder.addDoubleProperty("error", pid::getError, pid::setError);
-    builder.addDoubleProperty("result", pid::get, null);
+    //builder.addDoubleProperty("error", pid::getError, pid::setError);
+    //builder.addDoubleProperty("result", pid::get, null);
     builder.addStringProperty(".name", () -> name, null);
   }
-}
+} 

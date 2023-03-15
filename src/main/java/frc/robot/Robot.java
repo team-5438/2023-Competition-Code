@@ -59,12 +59,8 @@ public class Robot extends TimedRobot {
 	public Arm arm;
 
 	public AutonomousDrivetrain autodrive;
-<<<<<<< HEAD
-=======
   public drivetrain drive;
   public AHRS gyro;
-	public Intake intake;
->>>>>>> 6d749da830d114c245f199b12b2ce275e64d230d
 
 	public double currentVoltage;
 	public double[] voltages;
@@ -113,41 +109,6 @@ public class Robot extends TimedRobot {
 
 		voltages = new double[100];
 	}
-
-    public boolean getVoltages()
-  {
-    num++;
-		if (num == voltages.length) {
-			num = 0;
-		}
-
-		currentVoltage = ((intake.LeftMotor.getBusVoltage() + intake.RightMotor.getBusVoltage()) / 2);
-		// averageVoltage.add(currentVoltage);
-		voltages[num] = currentVoltage;
-		for (int i = 0; i < voltages.length - 1; i++)
-			if (i == voltages.length - 1) {
-				double meanVoltage = 0;
-				for (int n = 0; n < voltages.length - 1; n++) {
-					meanVoltage += voltages[n];
-				}
-				meanVoltage /= voltages.length;
-				voltages = new double[voltages.length];
-				voltages[0] = meanVoltage;
-        double percent = 0.5;
-        if (currentVoltage > (meanVoltage + (meanVoltage * percent)))
-          return true;
-        else
-          return false;
-			}
-  }
-
-  public void isVoltageSpike()
-  {
-    if (getVoltages())
-    {
-      intake.trigger = true;
-    }
-  }
 
     
 	/**
