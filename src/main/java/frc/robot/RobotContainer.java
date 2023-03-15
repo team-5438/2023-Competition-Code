@@ -47,7 +47,7 @@ public class RobotContainer {
 
 	Limelight limelight;
 
-	Arm arm = new Arm();
+	Arm arm = new Arm(null);
 	Hand hand = new Hand(new PIDController(Constants.WristP, Constants.WristI, Constants.WristD));
 
 	AutonomousDrivetrain autodrive;
