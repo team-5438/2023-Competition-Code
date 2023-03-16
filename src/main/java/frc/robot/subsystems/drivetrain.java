@@ -43,6 +43,7 @@ public class drivetrain extends SubsystemBase {
 	public RelativeEncoder rightEncoder;
 	private final AHRS gyro;
 	public Robot robot = new Robot();
+	public double speed = 1;
 
 	// define left and right side controller groups
 	MotorControllerGroup m_left = new MotorControllerGroup(frontLeft, backLeft);

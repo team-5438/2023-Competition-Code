@@ -10,6 +10,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.event.BooleanEvent;
 import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,8 +23,8 @@ import frc.robot.subsystems.*;
 import frc.robot.subsystems.Arm;
 import frc.robot.commands.*;
 import edu.wpi.first.math.controller.PIDController;
-
 import java.io.Console;
+import edu.wpi.first.wpilibj.Timer;
 
 import com.fasterxml.jackson.databind.deser.AbstractDeserializer;
 import com.revrobotics.RelativeEncoder;
@@ -183,6 +184,7 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand.cancel();
 		}
 
+		timer.reset();
 	}
 
 	/**
@@ -210,10 +212,24 @@ public class Robot extends TimedRobot {
 		if(m_robotContainer.operatorController.getXButton()){
 			m_robotContainer.hand.handPull(m_robotContainer.cubeMode);
 		}
-
+		
 		SmartDashboard.putBoolean("Mode", m_robotContainer.cubeMode);
 
-		
+		if (m_robotContainer.driveController.getLeftTriggerAxis() == 1)
+		{
+			timer.start();
+			if (timer.get() > 2 && (drive.speed > 0))
+			  drive.speed -= 0.05;
+		}
+
+		if (m_robotContainer.driveController.getRightTriggerAxis() == 1)
+		{
+			timer.start();
+			if (timer.get() > 2 && (drive.speed < 1))
+			  drive.speed += 0.05;
+		}
+
+
 	}
 	@Override
 	public void testInit() {
