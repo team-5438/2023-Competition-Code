@@ -98,12 +98,15 @@ public class Arm extends PIDSubsystem {
 	//static private DigitalInput topLimitSwitch = new DigitalInput(0);
 	//static private DigitalInput bottomLimitSwitch = new DigitalInput(0);
 
+  // initialize the slew rate limiter to make arm movement smoother
+  SlewRateLimiter filter = new SlewRateLimiter(0.5);
+
   public void pivotArm(double speed){
-	pivot_motor.set(MathUtil.applyDeadband(speed, 0.05));
+	pivot_motor.set(filter.calculate(MathUtil.applyDeadband(speed, 0.05)));
   }
 
   public void extendArm(double speed){
-	extender_motor.set(MathUtil.applyDeadband(speed, 0.05));
+	extender_motor.set(filter.calculate(MathUtil.applyDeadband(speed, 0.05)));
   }
 
   
