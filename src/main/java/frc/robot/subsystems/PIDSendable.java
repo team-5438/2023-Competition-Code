@@ -5,13 +5,11 @@ import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.util.sendable.SendableRegistry;
 
-public class PIDSendable implements Sendable
-{
+public class PIDSendable implements Sendable {
   private final PIDController pid;
   String name;
 
-  public PIDSendable(String name, PIDController pid)
-  {
+  public PIDSendable(String name, PIDController pid) {
     this.pid = pid;
     this.name = name;
     SendableRegistry.addChild(this, pid);

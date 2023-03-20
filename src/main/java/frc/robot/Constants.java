@@ -90,8 +90,6 @@ public final class Constants {
   public static final double ExtenderkV = 2.3;
   public static final double ExtenderkA = 0.1;
 
-
-
   public static final double kMaxSpeedMetersPerSecond = 0.75;
   public static final double kMaxAccelerationMetersPerSecondSquared = 0.75;
 
@@ -103,5 +101,4 @@ public final class Constants {
   public static final double kLimelightHeight = 1; // TODO: measure height of limelight
   public static final int SS1PWM = 0;
   public static final int SSLEN = 56;
-  
 }

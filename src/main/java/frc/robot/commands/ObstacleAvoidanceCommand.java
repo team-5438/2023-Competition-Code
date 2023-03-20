@@ -50,9 +50,11 @@ public class ObstacleAvoidanceCommand extends CommandBase {
 	}
 
 	private Rotation2d calculateAvoidanceDirection(Pose2d currentPose, double distanceToObstacle) {
-		// TODO: Determine the best direction to drive the robot to avoid the obstacle
-		// Use the Limelight's distance to the obstacle and the current pose of the
-		// robot to determine the best direction
+    /**
+     * TODO: Determine the best direction to drive the robot to avoid the obstacle
+     * Use the Limelight's distance to the obstacle and the current pose of the
+     * robot to determine the best direction
+     */
 		m_limelight.getDistance();
 		return null;
 	}

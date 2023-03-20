@@ -51,22 +51,21 @@ public class AutonomousDrivetrain {
 		return new DifferentialDriveWheelSpeeds(m_drive.leftWheelSpeed(), m_drive.rightWheelSpeed());
 	}
 
-	public Command getAutonomousCommand(AprilTag target) {
-		TrajectoryConfig config = new TrajectoryConfig(Constants.kMaxSpeedMetersPerSecond,
-				Constants.kMaxAccelerationMetersPerSecondSquared);
-		Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-				m_odometry.getPoseMeters(),
-				Arrays.asList(
-						new Translation2d(0, 0),
-						new Translation2d(m_limelight.getDistance() - 5, 0)),
-				new Pose2d(m_limelight.getDistance() - 5, 0, Rotation2d.fromDegrees(m_limelight.x)),
-				config);
+  public Command getAutonomousCommand(AprilTag target) {
+    TrajectoryConfig config = new TrajectoryConfig(Constants.kMaxSpeedMetersPerSecond,
+        Constants.kMaxAccelerationMetersPerSecondSquared);
 
-		RamseteCommand ramseteCommand = new RamseteCommand(trajectory, poseSupplier, null, m_feedforward, Constants.kDriveKinematics, null,
-				m_leftController, m_rightController, null);
+    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+        m_odometry.getPoseMeters(),
+        Arrays.asList( new Translation2d(0, 0), new Translation2d(m_limelight.getDistance() - 5, 0)),
+        new Pose2d(m_limelight.getDistance() - 5, 0, Rotation2d.fromDegrees(m_limelight.x)), config);
+
+    RamseteCommand ramseteCommand = new RamseteCommand(trajectory, 
+        poseSupplier, null, m_feedforward, Constants.kDriveKinematics, null,
+        m_leftController, m_rightController, null);
     // final Pos should be subtracted by a little bit
-		return new ObstacleAvoidanceCommand(ramseteCommand, m_drive, m_limelight);
-	}
+    return new ObstacleAvoidanceCommand(ramseteCommand, m_drive, m_limelight);
+  }
 
 	public Pose3d getPose() {
 		return new Pose3d(poseSupplier.get());
@@ -76,17 +75,16 @@ public class AutonomousDrivetrain {
 		return Math.IEEEremainder(m_drive.getGyro().getAngle(), 360) * (Constants.kGyroReversed ? -1.0 : 1.0);
 	}
 
-  /*void AutoAlign(AprilTag target)
-  {
-    double theta_x = m_limelight.tx;
-      while (Math.abs(gyro.getAngle() - theta_x) >= 5)
-      {
-        drivetrain.arcadeDrive(0, -0.65);
-      }
-      
-    double theta_y = m_limelight.ty;
-    distance = (limelight.height * Math.tan(theta_y)) * 0.95;
-    drivetrain.arcadeDrive(distance, 0);
-    
-  } */
+  /**
+   * void AutoAlign(AprilTag target) {
+   *   double theta_x = m_limelight.tx;
+   *   while (Math.abs(gyro.getAngle() - theta_x) >= 5) {
+   *   drivetrain.arcadeDrive(0, -0.65);
+   *   }
+   *
+   *   double theta_y = m_limelight.ty;
+   *   distance = (limelight.height * Math.tan(theta_y)) * 0.95;
+   *   drivetrain.arcadeDrive(distance, 0);
+   *   }
+   */
 }

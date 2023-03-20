@@ -8,7 +8,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-
 import java.awt.Robot;
 
 import edu.wpi.first.apriltag.AprilTag;
@@ -24,9 +23,6 @@ import frc.robot.subsystems.*;
 //commands
 import frc.robot.commands.DefaultDrive;
 import frc.robot.subsystems.drivetrain;
-
-
-
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -65,20 +61,18 @@ public class RobotContainer {
 	
 	public boolean cubeMode = false; //0 is cone, 1 is cube
 
-	/**
-	 * The container for the robot. Contains subsystems, OI devices, and commands.
-	 */
+	// The container for the robot. Contains subsystems, OI devices, and commands.
 	public RobotContainer(Limelight ll) {
 
 		// Configure the button bindings
 		configureButtonBindings();
 
 		// set default commands
-		m_drivetrain.setDefaultCommand(
-				new DefaultDrive(
-						m_drivetrain,
-						() -> getFwdAxis(),
-						() -> getTurnAxis()));
+    m_drivetrain.setDefaultCommand(
+        new DefaultDrive(
+          m_drivetrain,
+          () -> getFwdAxis(),
+          () -> getTurnAxis()));
 
 		limelight = ll;
 
@@ -167,6 +161,5 @@ public class RobotContainer {
 		Command autoalign = autodrive.getAutonomousCommand(apriltag);
 
 		return autoalign;
-
 	}
 }

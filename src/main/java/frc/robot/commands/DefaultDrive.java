@@ -16,9 +16,7 @@ public class DefaultDrive extends CommandBase {
 	private final DoubleSupplier m_fwd, m_rot;
 	private final drivetrain m_Drivetrain;
 
-	/**
-	 * Creates a new DefaultDrive.
-	 */
+	// Creates a new DefaultDrive.
 	public DefaultDrive(drivetrain drivetrain, DoubleSupplier fwdValue, DoubleSupplier rotValue) {
 		// define requirements
 		m_Drivetrain = drivetrain;

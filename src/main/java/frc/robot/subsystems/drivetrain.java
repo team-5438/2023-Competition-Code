@@ -32,8 +32,6 @@ import edu.wpi.first.wpilibj.I2C.Port;
 import frc.robot.subsystems.Limelight;
 
 public class drivetrain extends SubsystemBase {
-
-	;
 	// define Spark Maxes with IDs and as brushless controllers
 	public final CANSparkMax backLeft = new CANSparkMax(Constants.BACK_LEFT_SPARKMAX_ID, MotorType.kBrushless);
 	public final CANSparkMax frontLeft = new CANSparkMax(Constants.FRONT_LEFT_SPARKMAX_ID, MotorType.kBrushless);
@@ -64,7 +62,6 @@ public class drivetrain extends SubsystemBase {
 		gyro = new AHRS(Port.kMXP);
 
 		// Resets encoder in case counting has already begun.
-
 	}
 
 	public void arcadeDrive(double fwd, double rotation) {
@@ -131,7 +128,7 @@ public class drivetrain extends SubsystemBase {
 	public Supplier<Pose2d> getPose() {
 		return () -> new DifferentialDriveOdometry(null, robot.encoderBackLeft.getPosition(),
 				robot.encoderBackRight.getPosition()).getPoseMeters();
-		// TODO: Test these values out
+    // TODO: Test these values out
 	}
 
   public double getTurnRate() // returns turn rate in degrees / second
@@ -143,5 +140,4 @@ public class drivetrain extends SubsystemBase {
   {
     gyro.reset();
   }
-  
 }

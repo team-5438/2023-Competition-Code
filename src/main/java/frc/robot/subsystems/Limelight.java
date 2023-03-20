@@ -21,33 +21,32 @@ import com.kauailabs.navx.frc.AHRS;
 
 import frc.robot.subsystems.drivetrain; 
 
-
 public class Limelight {
-	public NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+  public NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 
-	public NetworkTableEntry tx = table.getEntry("tx");
-	public NetworkTableEntry ty = table.getEntry("ty");
-	public NetworkTableEntry ta = table.getEntry("ta");
-	public double z;
-	public double x;
-	public double y;
-	public double area;
+  public NetworkTableEntry tx = table.getEntry("tx");
+  public NetworkTableEntry ty = table.getEntry("ty");
+  public NetworkTableEntry ta = table.getEntry("ta");
+  public double z;
+  public double x;
+  public double y;
+  public double area;
 
-    public RelativeEncoder leftEncoder;
-    public RelativeEncoder rightEncoder;
-    public drivetrain dtrain;
-    public AHRS gyro;
+  public RelativeEncoder leftEncoder;
+  public RelativeEncoder rightEncoder;
+  public drivetrain dtrain;
+  public AHRS gyro;
 
-    public Limelight(){
-    }
+  public Limelight(){
+  }
 
-	public void setDrivetrain(drivetrain drive){
-		dtrain = drive;
-        leftEncoder = drive.leftEncoder;
-        rightEncoder = drive.rightEncoder;
+  public void setDrivetrain(drivetrain drive){
+    dtrain = drive;
+    leftEncoder = drive.leftEncoder;
+    rightEncoder = drive.rightEncoder;
 
-        gyro = drive.getGyro();
-	}
+    gyro = drive.getGyro();
+  }
 
 	final public void getValues() {
 		NetworkTableEntry tx = table.getEntry("tx");
@@ -77,10 +76,8 @@ public class Limelight {
 	}
 
 	final public Supplier<Pose2d> getPose() {
-	 double[] poseArray = table.getEntry("botpose").getDoubleArray(new double[6]);
-	 return () -> new DifferentialDriveOdometry(gyro.getRotation2d(),leftEncoder.getPosition(),rightEncoder.getPosition()).getPoseMeters();
-	 // TODO: Test these values out
+    double[] poseArray = table.getEntry("botpose").getDoubleArray(new double[6]);
+    return () -> new DifferentialDriveOdometry(gyro.getRotation2d(),leftEncoder.getPosition(),rightEncoder.getPosition()).getPoseMeters();
+    // TODO: Test these values out
 	 }
-
-  
 }
