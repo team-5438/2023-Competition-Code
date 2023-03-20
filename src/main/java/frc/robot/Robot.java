@@ -58,10 +58,12 @@ public class Robot extends TimedRobot {
 	public RelativeEncoder encoderFrontRight;
 	public Limelight limelight;
 	public Arm arm;
+	Timer timer;
+
 
 	public AutonomousDrivetrain autodrive;
-  public drivetrain drive;
-  public AHRS gyro;
+  	public drivetrain drive;
+ 	 public AHRS gyro;
 
 	public double currentVoltage;
 	public double[] voltages;
