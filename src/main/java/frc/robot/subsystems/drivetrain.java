@@ -21,6 +21,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -65,7 +66,7 @@ public class drivetrain extends SubsystemBase {
 	}
 
 	public void arcadeDrive(double fwd, double rotation) {
-		drive.arcadeDrive(fwd, -rotation);
+		drive.arcadeDrive(MathUtil.applyDeadband(fwd, 0.1), MathUtil.applyDeadband(-rotation, 0.1));
 	}
 
 	// Getter functions

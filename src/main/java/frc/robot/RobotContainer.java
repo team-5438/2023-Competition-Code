@@ -37,7 +37,7 @@ import frc.robot.subsystems.drivetrain;
 
 public class RobotContainer {
 	// define controllers
-	Joystick driveController = new Joystick(Constants.DRIVER_CONTROLLER_PORT);
+	XboxController driveController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
 
 	XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
 
@@ -106,11 +106,11 @@ public class RobotContainer {
 	// fightstickLBButton.whileHeld(new LimelightTurretAim(m_turret));
 
 	public double getFwdAxis() {
-		return driveController.getX();
+		return driveController.getLeftY();
 	}
 
 	public double getTurnAxis() {
-		return driveController.getY();
+		return driveController.getRightX();
 	}
 
 	public double getPivotSpeed() {

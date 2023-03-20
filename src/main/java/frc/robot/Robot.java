@@ -52,12 +52,13 @@ public class Robot extends TimedRobot {
   PIDSendable myPidSendable = new PIDSendable("My PID", myPid);
   private RobotContainer m_robotContainer;
 
-  public RelativeEncoder encoderBackLeft;
-  public RelativeEncoder encoderBackRight;
-  public RelativeEncoder encoderFrontLeft;
-  public RelativeEncoder encoderFrontRight;
-  public Limelight limelight;
-  public Arm arm;
+	public RelativeEncoder encoderBackLeft;
+	public RelativeEncoder encoderBackRight;
+	public RelativeEncoder encoderFrontLeft;
+	public RelativeEncoder encoderFrontRight;
+	public Limelight limelight;
+	public Arm arm;
+	Timer timer;
 
   public AutonomousDrivetrain autodrive;
   public drivetrain drive;
