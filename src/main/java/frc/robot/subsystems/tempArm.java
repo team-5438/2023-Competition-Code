@@ -75,7 +75,6 @@ import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 import edu.wpi.first.math.controller.PIDController;
-import com.ctre.phoenix.motorcontrol.ControlMode;
 
 /** A robot arm subsystem that moves with a motion profile. */
 public class tempArm extends PIDSubsystem {
