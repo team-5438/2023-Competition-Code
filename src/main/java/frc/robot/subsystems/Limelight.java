@@ -37,10 +37,10 @@ public class Limelight {
   public drivetrain dtrain;
   public AHRS gyro;
 
-  public Limelight(){
+  public Limelight() {
   }
 
-  public void setDrivetrain(drivetrain drive){
+  public void setDrivetrain(drivetrain drive) {
     dtrain = drive;
     leftEncoder = drive.leftEncoder;
     rightEncoder = drive.rightEncoder;
@@ -79,5 +79,5 @@ public class Limelight {
     double[] poseArray = table.getEntry("botpose").getDoubleArray(new double[6]);
     return () -> new DifferentialDriveOdometry(gyro.getRotation2d(),leftEncoder.getPosition(),rightEncoder.getPosition()).getPoseMeters();
     // TODO: Test these values out
-	 }
+	}
 }

@@ -17,7 +17,6 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
  * declared globally (i.e. public static). Do not put anything functional in
  * this class.
  *
- * <p>
  * It is advised to statically import this class (or one of its inner classes)
  * wherever the
  * constants are needed, to reduce verbosity.
@@ -54,7 +53,6 @@ public final class Constants {
     public static final double kArmOffsetRads = 0.5;
   }
 
-
 	// controller ids
 	public static final int DRIVER_CONTROLLER_PORT = 3;
 	public static final int OPERATOR_CONTROLLER_PORT = 4;
@@ -63,7 +61,6 @@ public final class Constants {
 
 	public static final double kTestAprilTagHeight = 22.9;
 	public static final double kRobotHeight = 43;
-
 
   // sensor ids
   public static final int LEFT_LIMIT_ID = 1;

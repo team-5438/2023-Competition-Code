@@ -39,7 +39,6 @@ public class AutonomousDrivetrain {
 
 	public void resetOdometry(Pose2d pose) {
 		m_odometry.resetPosition(Rotation2d.fromDegrees(getHeading()), 0, 0, pose);
-		;
 	}
 
 	public void periodic() {

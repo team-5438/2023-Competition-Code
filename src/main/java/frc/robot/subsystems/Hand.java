@@ -39,42 +39,39 @@ public class Hand extends PIDSubsystem {
 		doublePH.set(kReverse);
 	}
 
-	public void solenoidToggle(){
+	public void solenoidToggle() {
 		doublePH.toggle();
 	}
 
 	public void handPull(boolean mode) {
-		if (mode){
+		if (mode) {
 			//doublePH.set(kForward);
-			for(int i = 0; i < 3; i++){
+			for(int i = 0; i < 3; i++) {
 				m_handleftMotor.set(-0.25);
 				m_handrightMotor.set(0.25);
 				Timer.delay(1);
 			}
-		}
-
-		else if (!mode){
+		} else {
 			//doublePH.set(kReverse);
-			for(int i = 0; i < 3; i++){
+			for(int i = 0; i < 3; i++) {
 				m_handleftMotor.set(-0.25);
 				m_handleftMotor.set(0.25);
 				Timer.delay(1);
 			}
 		}
-			
 	}
   // 1 = forward, -1 = backwards (probably i have no clue)
 	
 	public void handRelease(boolean mode) {
-		if (!mode){
-			//doublePH.set(kReverse);
+		if (!mode) {
+			// doublePH.set(kReverse);
 			Timer.delay(2);
-			//doublePH.set(kForward);
+			// doublePH.set(kForward);
 		}
 		m_hand.set(0);
 
-		if (mode){
-			for (int i = 0; i < 3; i++){
+		if (mode) {
+			for (int i = 0; i < 3; i++) {
 				m_handleftMotor.set(0.25);
 				m_handrightMotor.set(-0.25);
 				Timer.delay(1);
@@ -83,11 +80,11 @@ public class Hand extends PIDSubsystem {
 		}
 	}
 
-	public void moveWrist(double speed){
+	public void moveWrist(double speed) {
 		m_handwristMotor.set(MathUtil.applyDeadband(speed, 0.05)); // STOP CHANGING IT!!!
 	}
 
-	public  void viewPressure (){
+	public void viewPressure() {
 		SmartDashboard.putNumber("Pressure", phCompressor.getPressure());
 	}
 
@@ -95,7 +92,6 @@ public class Hand extends PIDSubsystem {
 	protected void useOutput(double output, double setpoint) {
 		double voltage = getController().calculate(output, setpoint)+aff.calculate(setpoint, 0);
 		m_handwristMotor.setVoltage(voltage);
-		
 	}
 
 	@Override

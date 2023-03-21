@@ -69,7 +69,6 @@ public class Robot extends TimedRobot {
   int num;
 
   public Robot() {
-
   }
 
   /**
@@ -88,7 +87,7 @@ public class Robot extends TimedRobot {
     limelight = new Limelight();
     limelight.getValues();
     limelight.table.getInstance().startServer();
-    //arm = new Arm();
+    // arm = new Arm();
 
     m_robotContainer = new RobotContainer(limelight);
     limelight.setDrivetrain(m_robotContainer.m_drivetrain);
@@ -113,14 +112,12 @@ public class Robot extends TimedRobot {
     voltages = new double[100];
   }
 
-
   /**
    * This function is called every robot packet, no matter the mode. Use this for
    * items like
    * diagnostics that you want ran during disabled, autonomous, teleoperated and
    * test.
    *
-   * <p>
    * This runs after the mode specific periodic functions, but before
    * LiveWindow and SmartDashboard integrated updating.
    */
@@ -156,9 +153,8 @@ public class Robot extends TimedRobot {
     m_autonomousCommand = m_robotContainer.getAutoAlignCommand();
 
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
+    if (m_autonomousCommand != null)
       m_autonomousCommand.schedule();
-    }
   }
 
   // This function is called periodically during autonomous.
@@ -166,9 +162,7 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     CommandScheduler.getInstance().run();
     // place object on L3 height
-    while (gyro.getAngle() < 180)
-    {
-
+    while (gyro.getAngle() < 180) {
     }
     /**
      * drive over charging stand
@@ -184,9 +178,8 @@ public class Robot extends TimedRobot {
      * continue until interrupted by another command, remove
      * this line or comment it out.
      */
-    if (m_autonomousCommand != null) {
+    if (m_autonomousCommand != null)
       m_autonomousCommand.cancel();
-    }
 
     timer.reset();
   }
@@ -198,34 +191,27 @@ public class Robot extends TimedRobot {
         m_robotContainer.getTurnAxis() / 13);
 
     m_robotContainer.arm.pivotArm(m_robotContainer.getPivotSpeed());
-
     m_robotContainer.arm.extendArm(m_robotContainer.getExtenderSpeed()); 
-
     m_robotContainer.hand.moveWrist(m_robotContainer.getWristSpeed());
 
-    if (m_robotContainer.operatorController.getStartButtonPressed()){
+    if (m_robotContainer.operatorController.getStartButtonPressed())
       m_robotContainer.changeMode();
-    }
 
-    if(m_robotContainer.operatorController.getYButtonPressed()){
+    if(m_robotContainer.operatorController.getYButtonPressed())
       m_robotContainer.hand.handRelease(m_robotContainer.cubeMode);
-    }
 
-    if(m_robotContainer.operatorController.getXButton()){
+    if(m_robotContainer.operatorController.getXButton())
       m_robotContainer.hand.handPull(m_robotContainer.cubeMode);
-    }
 
     SmartDashboard.putBoolean("Mode", m_robotContainer.cubeMode);
 
-    if (m_robotContainer.driveController.getLeftTriggerAxis() == 1)
-    {
+    if (m_robotContainer.driveController.getLeftTriggerAxis() == 1) {
       timer.start();
       if (timer.get() > 2 && (drive.speed > 0))
         drive.speed -= 0.05;
     }
 
-    if (m_robotContainer.driveController.getRightTriggerAxis() == 1)
-    {
+    if (m_robotContainer.driveController.getRightTriggerAxis() == 1) {
       timer.start();
       if (timer.get() > 2 && (drive.speed < 1))
         drive.speed += 0.05;

@@ -8,7 +8,6 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.drivetrain;
 
 public class ObstacleAvoidanceCommand extends CommandBase {
-
 	private final drivetrain m_drivetrain;
 	private final Limelight m_limelight;
 
@@ -37,16 +36,14 @@ public class ObstacleAvoidanceCommand extends CommandBase {
 	}
 
 	private double calculateAvoidanceSpeed(double distanceToObstacle) {
-
 		double distanceFromObstacle = m_limelight.getDistance();
-		if (distanceFromObstacle >= 5) {
+		if (distanceFromObstacle >= 5)
 			return 0.3;
-		} else if (distanceFromObstacle < 5 && distanceFromObstacle >= 2) {
+		else if (distanceFromObstacle < 5 && distanceFromObstacle >= 2)
 			return 0.5;
-		} else {
+		else
 			return 0.8;
 			// TODO: Tune these values later
-		}
 	}
 
 	private Rotation2d calculateAvoidanceDirection(Pose2d currentPose, double distanceToObstacle) {

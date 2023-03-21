@@ -18,9 +18,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.AutonomousDrivetrain;
-//subsystems
+// subsystems
 import frc.robot.subsystems.*;
-//commands
+// commands
 import frc.robot.commands.DefaultDrive;
 import frc.robot.subsystems.drivetrain;
 
@@ -38,18 +38,16 @@ import frc.robot.subsystems.drivetrain;
 public class RobotContainer {
 	// define controllers
 	XboxController driveController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
-
 	XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
 
 	// define subsystems
 	drivetrain m_drivetrain = new drivetrain();
+	AutonomousDrivetrain autodrive;
 
 	Limelight limelight;
 
 	Arm arm = new Arm(null);
 	Hand hand = new Hand(new PIDController(Constants.WristP, Constants.WristI, Constants.WristD));
-
-	AutonomousDrivetrain autodrive;
 
 	AddressableLED sponsorStrip1;
 	AddressableLED sponsorStrip2;
@@ -87,8 +85,6 @@ public class RobotContainer {
 		sponsorStrip1.setData(sponsorStrip1Buffer);
 
 		sponsorStrip1.start();
-
-
 	}
 
 	/**
@@ -100,7 +96,6 @@ public class RobotContainer {
 	 * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
-
 	}
 
 	// fightstickLBButton.whileHeld(new LimelightTurretAim(m_turret));
@@ -117,34 +112,34 @@ public class RobotContainer {
 		return operatorController.getLeftY();
 	}
 
-	public double getExtenderSpeed(){
+	public double getExtenderSpeed() {
 		return operatorController.getLeftX();
 	}
 
-	public double getWristSpeed(){
+	public double getWristSpeed() {
 		return operatorController.getRightY();
 	}
 
-	public void setStripColor(AddressableLED m_led, AddressableLEDBuffer m_ledbuffer,int r, int g, int b){
-		for (int i = 0; i < m_ledbuffer.getLength(); i++){
+	public void setStripColor(AddressableLED m_led, AddressableLEDBuffer m_ledbuffer,int r, int g, int b) {
+		for (int i = 0; i < m_ledbuffer.getLength(); i++) {
 			m_ledbuffer.setRGB(i, r, g, b);
 		}
 
 		m_led.setData(m_ledbuffer);
 	}
 
-	public void setLED(){
-		//setStripColor(electronicsStrip, electronicsStripBuffer, 255, 255, 0);
-		if(cubeMode){
+	public void setLED() {
+		// setStripColor(electronicsStrip, electronicsStripBuffer, 255, 255, 0);
+		if(cubeMode) {
 		setStripColor(sponsorStrip1, sponsorStrip1Buffer, 255, 0, 255);
 		}
 		else{
 			setStripColor(sponsorStrip1, sponsorStrip1Buffer, 255, 128, 0);
 		}
-		//setStripColor(sponsorStrip2, sponsorStrip2Buffer, 255, 255, 0);
+		// setStripColor(sponsorStrip2, sponsorStrip2Buffer, 255, 255, 0);
 	}
 
-	public void changeMode(){
+	public void changeMode() {
 		cubeMode = !cubeMode;
 		setLED();
 	}
