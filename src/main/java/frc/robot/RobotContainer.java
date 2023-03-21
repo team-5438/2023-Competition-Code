@@ -113,7 +113,16 @@ public class RobotContainer {
 	}
 
 	public double getExtenderSpeed() {
-		return operatorController.getLeftX();
+		double extend = 0;
+		if(extend == 0 && operatorController.getLeftTriggerAxis() > 0){
+			extend = operatorController.getLeftTriggerAxis();
+		}
+
+		else if (extend == 0 && operatorController.getRightTriggerAxis() > 0){
+			extend = operatorController.getRightTriggerAxis();
+		}
+
+		return extend;
 	}
 
 	public double getWristSpeed() {

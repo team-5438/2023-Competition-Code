@@ -208,13 +208,13 @@ public class Robot extends TimedRobot {
     if (m_robotContainer.driveController.getLeftTriggerAxis() == 1) {
       timer.start();
       if (timer.get() > 2 && (drive.speed > 0))
-        drive.speed -= 0.05;
+        drive.speed *= 0.25;
     }
 
     if (m_robotContainer.driveController.getRightTriggerAxis() == 1) {
       timer.start();
       if (timer.get() > 2 && (drive.speed < 1))
-        drive.speed += 0.05;
+        drive.speed *= 0.5;
     }
   }
 
