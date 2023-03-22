@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.util.Units;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -98,4 +99,7 @@ public final class Constants {
   public static final double kLimelightHeight = 1; // TODO: measure height of limelight
   public static final int SS1PWM = 0;
   public static final int SSLEN = 56;
+
+  public static final double FieldLengthMeters = Units.inchesToMeters(651.25);
+  public static final double FieldWidthMeters = Units.inchesToMeters(315.5);
 }
