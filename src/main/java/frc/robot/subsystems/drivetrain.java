@@ -17,6 +17,7 @@ import frc.robot.*;
 import java.util.function.Supplier;
 
 import com.revrobotics.CANSparkMax;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.kauailabs.navx.frc.AHRS;
@@ -74,8 +75,11 @@ public class drivetrain extends SubsystemBase {
 		// Resets encoder in case counting has already begun.
 	}
 
+  // enable slew rate limiter
+  SlewRateLimiter filter = new SlewRateLimiter(0.5);
+
 	public void arcadeDrive(double fwd, double rotation) {
-		drive.arcadeDrive(MathUtil.applyDeadband(fwd, 0.1), MathUtil.applyDeadband(-rotation, 0.1));
+		drive.arcadeDrive(filter.calculate(MathUtil.applyDeadband(fwd, 0.1)), filter.calculate(MathUtil.applyDeadband(-rotation, 0.1)));
 	}
 
 	// Getter functions
