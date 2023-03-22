@@ -172,7 +172,7 @@ public class drivetrain extends SubsystemBase {
 
   public DifferentialDriveWheelSpeeds getWheelPositions()
   {
-    return new DifferentialDriveWheelSpeeds(
+    return new DifferentialDriveWheelPositions(
       frontLeft.getEncoder().getPosition(),
       frontRight.getEncoder().getPosition(),
       backLeft.getEncoder().getPosition(),

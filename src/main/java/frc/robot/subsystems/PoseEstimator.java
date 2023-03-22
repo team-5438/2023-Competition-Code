@@ -26,11 +26,35 @@ public class PoseEstimator extends SubsystemBase
     field = new Field2d();
     SmartDashboard.putData("Field", m_field);
 
-    poseEstimator = new DifferentialDrivePoseEstimator(Constants.kDriveKinematics);
-
-
+    poseEstimator = new DifferentialDrivePoseEstimator(
+      Constants.kDriveKinematics, 
+      drive.getNavxAngle(), 
+      drive.getWheelPositions(),
+      new Pose2d(0, 0, new Rotation2d(Math.PI)),
+      stateEstimate,
+      visionEstimate
+    );
+    photonPoseEstimator = vision.getVisionPose();
   }
 
+  @Override
+  public void periodic()
+  {
+    poseEstimator.update(drive.getNavxAngle(), drive.getWheelPositions());
+
+    if (photonPoseEstimator != null)
+    {
+      photonPoseEstimator.update().ifPresent(estimatedRobotPose -> {
+        var estimatedPose = estimatedRobotPose.estimatedPose;
+
+        if (estimatedRobotPose.timestampSeconds != pipelineTimestamp && estimatedPose.getX() > 0 && estimatedPose.getX() <= Constants.FieldLengthMeters && estimatedPose.getY() > 0 && estimatedPose.getY() <= FieldWidthMeters)
+        {
+          if (estimatedRobotPose.targetsUsed)
+        }
+      })
+    }
+  }
+  
   public Pose2d getPose()
   {
     return poseEstimator.getEstimatedPosition();
