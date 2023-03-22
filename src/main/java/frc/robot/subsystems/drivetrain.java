@@ -44,6 +44,9 @@ public class drivetrain extends SubsystemBase {
 	public Robot robot = new Robot();
 	public double speed = 1;
 
+	private AHRS navx;
+	private Rotation2d navxOffset;
+
 	// define left and right side controller groups
 	MotorControllerGroup m_left = new MotorControllerGroup(frontLeft, backLeft);
 	MotorControllerGroup m_right = new MotorControllerGroup(frontRight, backRight);
@@ -61,6 +64,12 @@ public class drivetrain extends SubsystemBase {
 		rightEncoder = backRight.getEncoder();
 
 		gyro = new AHRS(Port.kMXP);
+		navx = new AHRS(Port.kMXP); // CHANGE THIS PORT
+
+		navxOffset = new Rotation2d();
+		gyro.reset();
+		navx.reset();
+		navx.calibrate();
 
 		// Resets encoder in case counting has already begun.
 	}
@@ -139,5 +148,20 @@ public class drivetrain extends SubsystemBase {
 
   public void zeroGyro() {
     gyro.reset();
+  }
+
+  public double getPitch()
+  {
+	return navx.getPitch();
+  }
+
+  public Rotation2d getNavxAngle()
+  {
+	return Rotation2d.fromDegrees(-navx.getAngle());
+  }
+
+  public void setNavxAngle(Rotation2d angle)
+  {
+	navxOffset = angle;
   }
 }
