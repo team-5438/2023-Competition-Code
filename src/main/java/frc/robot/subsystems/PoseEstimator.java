@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import edu.wpi.first.math.*;
+import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -12,7 +14,7 @@ public class PoseEstimator extends SubsystemBase
 {
   private DifferentialDrivePoseEstimator poseEstimator;
   private PhotonPoseEstimator photonPoseEstimator;
-  private Vision vision;
+  private Limelight limelight;
   
   drivetrain drive;
   private Field2d field;
@@ -26,15 +28,6 @@ public class PoseEstimator extends SubsystemBase
     field = new Field2d();
     SmartDashboard.putData("Field", m_field);
 
-    poseEstimator = new DifferentialDrivePoseEstimator(
-      Constants.kDriveKinematics, 
-      drive.getNavxAngle(), 
-      drive.getWheelPositions(),
-      new Pose2d(0, 0, new Rotation2d(Math.PI)),
-      stateEstimate,
-      visionEstimate
-    );
-    photonPoseEstimator = vision.getVisionPose();
   }
 
   @Override
@@ -47,12 +40,7 @@ public class PoseEstimator extends SubsystemBase
       photonPoseEstimator.update().ifPresent(estimatedRobotPose -> {
         var estimatedPose = estimatedRobotPose.estimatedPose;
 
-        if (estimatedRobotPose.timestampSeconds != pipelineTimestamp && estimatedPose.getX() > 0 && estimatedPose.getX() <= Constants.FieldLengthMeters && estimatedPose.getY() > 0 && estimatedPose.getY() <= FieldWidthMeters)
-        {
-          if (estimatedRobotPose.targetsUsed)
-        }
-      })
-    }
+      
   }
   
   public Pose2d getPose()
