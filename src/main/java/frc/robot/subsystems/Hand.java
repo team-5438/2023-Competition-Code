@@ -19,8 +19,9 @@ import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 public class Hand extends PIDSubsystem {
 	//mode 0 is cone, mode 1 is cube
 
-  private final CANSparkMax m_handleftMotor = new CANSparkMax(Constants.HANDLEFT_MOTOR_SPARKMAX_ID,MotorType.kBrushless);
-  private final CANSparkMax m_handrightMotor = new CANSparkMax(Constants.HANDRIGHT_MOTOR_SPARKMAX_ID,MotorType.kBrushless);
+	private final CANSparkMax m_handleftMotor = new CANSparkMax(Constants.HANDLEFT_MOTOR_SPARKMAX_ID,MotorType.kBrushless);
+    private final CANSparkMax m_handrightMotor = new CANSparkMax(Constants.HANDRIGHT_MOTOR_SPARKMAX_ID,MotorType.kBrushless);
+	
 
 	private final DutyCycleEncoder wristEncoder = new DutyCycleEncoder(1);
 
@@ -39,39 +40,48 @@ public class Hand extends PIDSubsystem {
 		doublePH.set(kReverse);
 	}
 
-	public void solenoidToggle() {
+	public void solenoidToggle(){
 		doublePH.toggle();
 	}
 
+
 	public void handPull(boolean mode) {
-		if (mode) {
+		if (mode){
 			//doublePH.set(kForward);
-			for(int i = 0; i < 3; i++) {
+			for(int i = 0; i < 3; i++){
 				m_handleftMotor.set(-0.25);
 				m_handrightMotor.set(0.25);
 				Timer.delay(1);
 			}
-		} else {
+		}
+
+		else if (!mode){
 			//doublePH.set(kReverse);
-			for(int i = 0; i < 3; i++) {
+			for(int i = 0; i < 3; i++){
 				m_handleftMotor.set(-0.25);
 				m_handleftMotor.set(0.25);
 				Timer.delay(1);
 			}
 		}
+			
 	}
-  // 1 = forward, -1 = backwards (probably i have no clue)
+		// 1 = forward, -1 = backwards (probably i have no clue)
 	
 	public void handRelease(boolean mode) {
-		if (!mode) {
-			// doublePH.set(kReverse);
-			Timer.delay(2);
-			// doublePH.set(kForward);
+		if (!mode){
+			//doublePH.set(kReverse);
+			for (int i = 0; i < 3; i++){
+				m_handleftMotor.set(0.25);
+				m_handrightMotor.set(-0.25);
+				Timer.delay(1);
+			}
+			Timer.delay(1);
+			//doublePH.set(kForward);
 		}
 		m_hand.set(0);
 
-		if (mode) {
-			for (int i = 0; i < 3; i++) {
+		if (mode){
+			for (int i = 0; i < 3; i++){
 				m_handleftMotor.set(0.25);
 				m_handrightMotor.set(-0.25);
 				Timer.delay(1);

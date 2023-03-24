@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.AutonomousDrivetrain;
 // subsystems
@@ -38,7 +39,7 @@ import frc.robot.subsystems.drivetrain;
 public class RobotContainer {
 	// define controllers
 	XboxController driveController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
-	XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
+	PS4Controller operatorController = new PS4Controller(Constants.OPERATOR_CONTROLLER_PORT);
 
 	// define subsystems
 	drivetrain m_drivetrain = new drivetrain();
@@ -114,12 +115,12 @@ public class RobotContainer {
 
 	public double getExtenderSpeed() {
 		double extend = 0;
-		if(extend == 0 && operatorController.getLeftTriggerAxis() > 0){
-			extend = operatorController.getLeftTriggerAxis();
+		if(extend == 0 && operatorController.getL2Axis() > 0){
+			extend = operatorController.getL2Axis();
 		}
 
-		else if (extend == 0 && operatorController.getRightTriggerAxis() > 0){
-			extend = operatorController.getRightTriggerAxis();
+		else if (extend == 0 && operatorController.getR2Axis() > 0){
+			extend = operatorController.getR2Axis();
 		}
 
 		return extend;

@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.event.BooleanEvent;
 import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -194,13 +195,13 @@ public class Robot extends TimedRobot {
     m_robotContainer.arm.extendArm(m_robotContainer.getExtenderSpeed()); 
     m_robotContainer.hand.moveWrist(m_robotContainer.getWristSpeed());
 
-    if (m_robotContainer.operatorController.getStartButtonPressed())
+    if (m_robotContainer.operatorController.getTouchpadPressed())
       m_robotContainer.changeMode();
 
-    if(m_robotContainer.operatorController.getYButtonPressed())
+    if(m_robotContainer.operatorController.getL1ButtonPressed())
       m_robotContainer.hand.handRelease(m_robotContainer.cubeMode);
 
-    if(m_robotContainer.operatorController.getXButton())
+    if(m_robotContainer.operatorController.getR1ButtonPressed())
       m_robotContainer.hand.handPull(m_robotContainer.cubeMode);
 
     SmartDashboard.putBoolean("Mode", m_robotContainer.cubeMode);
