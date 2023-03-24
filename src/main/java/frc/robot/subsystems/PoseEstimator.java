@@ -16,7 +16,6 @@ public class PoseEstimator extends SubsystemBase
 {
   private DifferentialDrivePoseEstimator poseEstimator;
   private PhotonPoseEstimator photonPoseEstimator;
-
   
   drivetrain drive;
   private Field2d field;
@@ -50,12 +49,7 @@ public class PoseEstimator extends SubsystemBase
       photonPoseEstimator.update().ifPresent(estimatedRobotPose -> {
         var estimatedPose = estimatedRobotPose.estimatedPose;
 
-        if (estimatedRobotPose.timestampSeconds != pipelineTimestamp && estimatedPose.getX() > 0 && estimatedPose.getX() <= Constants.FieldLengthMeters && estimatedPose.getY() > 0 && estimatedPose.getY() <= FieldWidthMeters)
-        {
-          if (estimatedRobotPose.targetsUsed)
-        }
-      })
-    }
+      
   }
   
   public Pose2d getPose()

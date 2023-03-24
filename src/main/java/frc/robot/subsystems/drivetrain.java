@@ -25,14 +25,13 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.*;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C.Port;
 import frc.robot.subsystems.Limelight;
-
-import com.pathplanner.lib.PathPlannerTrajectory;
 
 public class drivetrain extends SubsystemBase {
 	// define Spark Maxes with IDs and as brushless controllers
@@ -168,15 +167,5 @@ public class drivetrain extends SubsystemBase {
   public void setNavxAngle(Rotation2d angle)
   {
 	navxOffset = angle;
-  }
-
-  public DifferentialDriveWheelSpeeds getWheelPositions()
-  {
-    return new DifferentialDriveWheelPositions(
-      frontLeft.getEncoder().getPosition(),
-      frontRight.getEncoder().getPosition(),
-      backLeft.getEncoder().getPosition(),
-      backRight.getEncoder().getPosition()
-    );
   }
 }
