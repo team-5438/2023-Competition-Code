@@ -16,7 +16,7 @@
  * static private final CANSparkMax pivotMotor = new CANSparkMax(Constants.PIVOT_MOTOR_SPARKMAX_ID, MotorType.kBrushless);
  * static private final CANSparkMax extenderMotor = new CANSparkMax(Constants.EXTENDER_MOTOR_SPARKMAX_ID, MotorType.kBrushless);
 
- * static private final DutyCycleEncoder pivotEncoder = new DutyCycleEncoder(0);
+ * static private final AbsoluteEncoder pivotEncoder = pivotMotor.getAbsoluteEncoder(kDutyCycle);
 
  * private final SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(Constants.ksVolts, Constants.kvVoltSecondsPerMeter);
 
@@ -87,7 +87,7 @@ public class Arm extends PIDSubsystem {
   public DigitalInput extender_forward = new DigitalInput(8);
   public SparkMaxLimitSwitch extneder_reverse = extender_motor.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
 
-	static private final DutyCycleEncoder pivotEncoder = new DutyCycleEncoder(ArmConstants.kEncoderPort);
+	static private final AbsoluteEncoder pivotEncoder = new AbsoluteEncoder(kDutyCycle);
   static private boolean ArmLimitReached;
 
 	private final ArmFeedforward m_feedforward = new ArmFeedforward(Constants.ArmkS, Constants.ArmkG, Constants.ArmkV, Constants.ArmkA);
