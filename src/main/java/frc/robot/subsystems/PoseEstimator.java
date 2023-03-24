@@ -1,8 +1,12 @@
-package frc.robot.subsystems;
+/*package frc.robot.subsystems;
 
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import edu.wpi.first.math.*;
+import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -12,7 +16,7 @@ public class PoseEstimator extends SubsystemBase
 {
   private DifferentialDrivePoseEstimator poseEstimator;
   private PhotonPoseEstimator photonPoseEstimator;
-  private Vision vision;
+
   
   drivetrain drive;
   private Field2d field;
@@ -24,7 +28,7 @@ public class PoseEstimator extends SubsystemBase
   {
     drive = m_drive;
     field = new Field2d();
-    SmartDashboard.putData("Field", m_field);
+    SmartDashboard.putData("Field", field);
 
     poseEstimator = new DifferentialDrivePoseEstimator(
       Constants.kDriveKinematics, 
@@ -34,7 +38,6 @@ public class PoseEstimator extends SubsystemBase
       stateEstimate,
       visionEstimate
     );
-    photonPoseEstimator = vision.getVisionPose();
   }
 
   @Override
@@ -62,7 +65,7 @@ public class PoseEstimator extends SubsystemBase
   
   public void setPose(Pose2d newPose)
   {
-    poseEstimator.resetPosition(drive.getNavxAngle(), drive.getWheelPositions(), newPose2d());
+    poseEstimator.resetPosition(drive.getNavxAngle(), drive.getWheelPositions(), new Pose2d());
   }
   
   public void resetPosition()
@@ -70,3 +73,4 @@ public class PoseEstimator extends SubsystemBase
     setPose(new Pose2d());
   }
 }
+*/

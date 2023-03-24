@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 
+import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
+
 public class Hand extends PIDSubsystem {
 	//mode 0 is cone, mode 1 is cube
 
@@ -23,9 +25,9 @@ public class Hand extends PIDSubsystem {
     private final CANSparkMax m_handrightMotor = new CANSparkMax(Constants.HANDRIGHT_MOTOR_SPARKMAX_ID,MotorType.kBrushless);
 	
 
-	private final DutyCycleEncoder wristEncoder = new DutyCycleEncoder(1);
-
 	private final CANSparkMax m_handwristMotor = new CANSparkMax(Constants.WRIST_MOTOR, MotorType.kBrushless);
+
+	private final AbsoluteEncoder wristEncoder = m_handwristMotor.getAbsoluteEncoder(Type.kDutyCycle);
 	private final MotorControllerGroup m_hand = new MotorControllerGroup(m_handleftMotor, m_handrightMotor);
 	private Compressor phCompressor = new Compressor(10,PneumaticsModuleType.REVPH); 
 	DoubleSolenoid doublePH = new DoubleSolenoid(PneumaticsModuleType.REVPH, 0, 1);
@@ -90,23 +92,26 @@ public class Hand extends PIDSubsystem {
 		}
 	}
 
-	public void moveWrist(double speed) {
+	public void moveWrist(double speed){
 		m_handwristMotor.set(MathUtil.applyDeadband(speed, 0.05)); // STOP CHANGING IT!!!
 	}
 
-	public void viewPressure() {
+	public  void viewPressure (){
 		SmartDashboard.putNumber("Pressure", phCompressor.getPressure());
 	}
+
+
 
 	@Override
 	protected void useOutput(double output, double setpoint) {
 		double voltage = getController().calculate(output, setpoint)+aff.calculate(setpoint, 0);
 		m_handwristMotor.setVoltage(voltage);
+		
 	}
 
 	@Override
 	protected double getMeasurement() {
 		// TODO Auto-generated method stub
-		return wristEncoder.getDistance();
+		return wristEncoder.getPosition();
 	}
 }

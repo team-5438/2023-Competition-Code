@@ -59,10 +59,13 @@
 
 package frc.robot.subsystems;
 
+//import java.lang.reflect.Type;
+
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
@@ -87,7 +90,7 @@ public class Arm extends PIDSubsystem {
   public DigitalInput extender_forward = new DigitalInput(8);
   public SparkMaxLimitSwitch extneder_reverse = extender_motor.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
 
-	static private final DutyCycleEncoder pivotEncoder = new DutyCycleEncoder(ArmConstants.kEncoderPort);
+	private final AbsoluteEncoder pivotEncoder = pivot_motor.getAbsoluteEncoder(Type.kDutyCycle);
   static private boolean ArmLimitReached;
 
 	private final ArmFeedforward m_feedforward = new ArmFeedforward(Constants.ArmkS, Constants.ArmkG, Constants.ArmkV, Constants.ArmkA);
@@ -96,7 +99,6 @@ public class Arm extends PIDSubsystem {
 
 	public Arm(PIDController controller) {
 		super(new PIDController(Constants.ArmkP, Constants.ArmkI, Constants.ArmkD));
-    pivotEncoder.reset();
 	}
   /** 
    * static private DigitalInput topLimitSwitch = new DigitalInput(0);
@@ -128,6 +130,6 @@ public class Arm extends PIDSubsystem {
 
   @Override
   public double getMeasurement() {
-    return pivotEncoder.getDistance() + ArmConstants.kArmOffsetRads;
+    return pivotEncoder.getPosition() + ArmConstants.kArmOffsetRads;
   }
 }
