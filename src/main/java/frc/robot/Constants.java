@@ -75,6 +75,7 @@ public final class Constants {
   public static final double ArmkP = 0.1;
   public static final double ArmkI = 0.001;
   public static final double ArmkD = 0.05;
+  public static final double ArmSlew = 0.5;
 
   public static final double WristP = 0;
   public static final double WristI = 0;
