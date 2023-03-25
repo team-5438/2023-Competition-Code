@@ -7,32 +7,33 @@
 
 package frc.robot.subsystems;
 
-import frc.robot.Constants;
-
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.*;
-
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import com.revrobotics.CANSparkMax;
-import edu.wpi.first.math.filter.SlewRateLimiter;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPRamseteCommand;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.*;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C.Port;
-import frc.robot.subsystems.Limelight;
-
-import com.pathplanner.lib.PathPlannerTrajectory;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.Robot;
 
 public class drivetrain extends SubsystemBase {
 	// define Spark Maxes with IDs and as brushless controllers
@@ -170,7 +171,7 @@ public class drivetrain extends SubsystemBase {
 	navxOffset = angle;
   }
 
-  public DifferentialDriveWheelSpeeds getWheelPositions()
+  /*public DifferentialDriveWheelPositions getWheelPositions()
   {
     return new DifferentialDriveWheelPositions(
       frontLeft.getEncoder().getPosition(),
@@ -178,5 +179,33 @@ public class drivetrain extends SubsystemBase {
       backLeft.getEncoder().getPosition(),
       backRight.getEncoder().getPosition()
     );
+  } */
+
+  public void setWheelSpeeds(DifferentialDriveWheelSpeeds wheelSpeeds)
+  {
+    frontLeft.set(wheelSpeeds.left);
+    
+  }
+  
+  public void setChassisSpeeds(ChassisSpeeds speed)
+  {
+    DifferentialDriveWheelSpeeds wheelSpeeds = Constants.kDriveKinematics.toWheelSpeeds(speed);
+    
+  }
+  
+  public CommandBase followTrajectory(drivetrain drive, PathPlannerTrajectory path)
+  {
+    PIDController controller = new PIDController(4.5, 0, 0);
+
+    controller.enableContinuousInput(-Math.PI, Math.PI);
+    Consumer<ChassisSpeeds> SetChassisSpeeds = (ChassisSpeeds speed) -> {
+      drive.setChassisSpeeds(speed);
+    };
+
+    return new PPRamseteCommand(
+      path,
+      PoseEstimator::getPose
+    )
+    
   }
 }
