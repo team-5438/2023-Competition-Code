@@ -78,6 +78,8 @@ import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
+import com.revrobotics.RelativeEncoder;
 
 // A robot arm subsystem that moves with a motion profile.
 public class Arm extends PIDSubsystem {
@@ -96,7 +98,9 @@ public class Arm extends PIDSubsystem {
 
 	public Arm(PIDController controller) {
 		super(new PIDController(Constants.ArmkP, Constants.ArmkI, Constants.ArmkD));
-    pivotEncoder.reset();
+    controller.reset();
+    controller.setTolerance(5, 10);
+    controller.enableContinuousInput(-180, 180);
 	}
   /** 
    * static private DigitalInput topLimitSwitch = new DigitalInput(0);
@@ -104,14 +108,14 @@ public class Arm extends PIDSubsystem {
    */
 
   // initialize the slew rate limiter to make arm movement smoother
-  SlewRateLimiter filter = new SlewRateLimiter(0.5);
+  SlewRateLimiter filter = new SlewRateLimiter(Constants.ArmSlew);
 
-  public void pivotArm(double speed){
-	pivot_motor.set(filter.calculate(MathUtil.applyDeadband(speed, 0.05)));
+  public void pivotArm(double speed) {
+    pivot_motor.set(filter.calculate(MathUtil.applyDeadband(speed, 0.05)));
   }
 
-  public void extendArm(double speed){
-	extender_motor.set(filter.calculate(MathUtil.applyDeadband(speed, 0.05)));
+  public void extendArm(double speed) {
+    extender_motor.set(filter.calculate(MathUtil.applyDeadband(speed, 0.05)));
   }
 
   @Override
@@ -129,5 +133,14 @@ public class Arm extends PIDSubsystem {
   @Override
   public double getMeasurement() {
     return pivotEncoder.getDistance() + ArmConstants.kArmOffsetRads;
+  }
+
+  public void applyPreset(double pos) {
+    if (getMeasurement() == 0.0) {
+      useOutput(1, pos);
+    } else {
+      useOutput(1, 0.0);
+      useOutput(1, pos);
+    }
   }
 }

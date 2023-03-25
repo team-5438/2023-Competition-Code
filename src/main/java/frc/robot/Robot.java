@@ -195,6 +195,9 @@ public class Robot extends TimedRobot {
     m_robotContainer.arm.extendArm(m_robotContainer.getExtenderSpeed()); 
     m_robotContainer.hand.moveWrist(m_robotContainer.getWristSpeed());
 
+    SmartDashboard.putBoolean("Mode", m_robotContainer.cubeMode);
+
+    // PS4 (operator) controls
     if (m_robotContainer.operatorController.getTouchpadPressed())
       m_robotContainer.changeMode();
 
@@ -204,8 +207,14 @@ public class Robot extends TimedRobot {
     if(m_robotContainer.operatorController.getR1ButtonPressed())
       m_robotContainer.hand.handPull(m_robotContainer.cubeMode);
 
-    SmartDashboard.putBoolean("Mode", m_robotContainer.cubeMode);
+    if (m_robotContainer.operatorController.getCircleButtonPressed())
+      arm.applyPreset(180);
+    if (m_robotContainer.operatorController.getTriangleButtonPressed())
+      arm.applyPreset(90);
+    if (m_robotContainer.operatorController.getSquareButtonPressed())
+      arm.applyPreset(0);
 
+    // Xbox (driver) controls
     if (m_robotContainer.driveController.getLeftTriggerAxis() == 1) {
       timer.start();
       if (timer.get() > 2 && (drive.speed > 0))
