@@ -159,6 +159,8 @@ public class Robot extends TimedRobot {
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null)
       m_autonomousCommand.schedule();
+
+    PathPlannerTrajectory autoPath = PathPlanner.loadPath("AutoPath", new PathConstraints(4, 3));
   }
 
   // This function is called periodically during autonomous.

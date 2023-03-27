@@ -7,8 +7,6 @@
 
 package frc.robot.subsystems;
 
-import frc.robot.Constants;
-
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -27,12 +25,21 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.controller.DifferentialDriveWheelVoltages;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+
 import frc.robot.subsystems.Limelight;
-import com.pathplanner.lib*;
+import frc.robot.Constants;
+
+
+import com.pathplanner.lib.commands.PPRamseteCommand;
+import com.pathplanner.lib.PathPlannerTrajectory;
 
 public class drivetrain extends SubsystemBase {
 	// define Spark Maxes with IDs and as brushless controllers
@@ -135,6 +142,16 @@ public class drivetrain extends SubsystemBase {
 		drive.setMaxOutput(maxOutput);
 	}
 
+  public DifferentialDriveWheelSpeeds getWheelSpeeds()
+  {
+    return new DifferentialDriveWheelSpeeds(
+      frontLeft.getEncoder().getVelocity(),
+      backLeft.getEncoder().getVelocity(),
+      frontRight.getEncoder().getVelocity(),
+      backRight.getEncoder().getVelocity()
+    );
+  }
+
 	@Override
 	public void periodic() {
 		// This method will be called once per scheduler run
@@ -170,17 +187,26 @@ public class drivetrain extends SubsystemBase {
 	navxOffset = angle;
   }
 
+  public DifferentialDriveWheelVoltages OutputVolts()
+  {
+    return new DifferentialDriveWheelVoltages()
+  }
+  
   public Command followTrajectory(PathPlannerTrajectory path)
   {
     return new PPRamseteCommand(
       path,
-      this::getPose,
+      getPose(),
+      
       new RamseteController(),
       new SimpleMotorFeedforward(),
       Constants.kDriveKinematics,
-      this:: getWheelSpeeds
-      new PIDController(); // left
-      new PIDController(); // right
+      getWheelSpeeds(),
+      new PIDController(0, 0, 0), // left CHANGE THESE LATER
+      new PIDController(0, 0, 0), // right CHANGE THESE LATER
+      OutputVolts(),
+      true,
+      this
     )
   }
 }
