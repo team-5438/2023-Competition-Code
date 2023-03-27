@@ -34,6 +34,9 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Encoder;
 import com.kauailabs.navx.frc.AHRS;
 
+import com.pathplanner.lib.*;
+
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to

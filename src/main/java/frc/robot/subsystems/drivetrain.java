@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C.Port;
 import frc.robot.subsystems.Limelight;
+import com.pathplanner.lib*;
 
 public class drivetrain extends SubsystemBase {
 	// define Spark Maxes with IDs and as brushless controllers
@@ -167,5 +168,19 @@ public class drivetrain extends SubsystemBase {
   public void setNavxAngle(Rotation2d angle)
   {
 	navxOffset = angle;
+  }
+
+  public Command followTrajectory(PathPlannerTrajectory path)
+  {
+    return new PPRamseteCommand(
+      path,
+      this::getPose,
+      new RamseteController(),
+      new SimpleMotorFeedforward(),
+      Constants.kDriveKinematics,
+      this:: getWheelSpeeds
+      new PIDController(); // left
+      new PIDController(); // right
+    )
   }
 }
