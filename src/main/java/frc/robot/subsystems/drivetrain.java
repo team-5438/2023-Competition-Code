@@ -189,7 +189,7 @@ public class drivetrain extends SubsystemBase {
 
   public DifferentialDriveWheelVoltages OutputVolts()
   {
-    return new DifferentialDriveWheelVoltages()
+    return new DifferentialDriveWheelVoltages(frontLeft.getBusVoltage(), frontRight.getBusVoltage())
   }
   
   public Command followTrajectory(PathPlannerTrajectory path)
@@ -202,8 +202,8 @@ public class drivetrain extends SubsystemBase {
       new SimpleMotorFeedforward(),
       Constants.kDriveKinematics,
       getWheelSpeeds(),
-      new PIDController(0, 0, 0), // left CHANGE THESE LATER
-      new PIDController(0, 0, 0), // right CHANGE THESE LATER
+      new PIDController(4.5, 0, 0), // left CHANGE THESE LATER
+      new PIDController(5, 0, 0), // right CHANGE THESE LATER
       OutputVolts(),
       true,
       this
