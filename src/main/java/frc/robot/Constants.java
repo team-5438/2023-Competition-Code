@@ -103,4 +103,8 @@ public final class Constants {
 
   public static final double FieldLengthMeters = Units.inchesToMeters(651.25);
   public static final double FieldWidthMeters = Units.inchesToMeters(315.5);
+
+  public static final double DrivekS = 0;
+  public static final double DrivekV = 0;
+  public static final double DrivekA = 0;
 }

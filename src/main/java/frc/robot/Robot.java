@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutonomousDrivetrain;
 import edu.wpi.first.apriltag.*;
 import frc.robot.subsystems.*;
-import frc.robot.subsystems.Arm;
 import frc.robot.commands.*;
 import edu.wpi.first.math.controller.PIDController;
 import java.io.Console;
@@ -161,6 +160,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.schedule();
 
     PathPlannerTrajectory autoPath = PathPlanner.loadPath("AutoPath", new PathConstraints(4, 3));
+    drive.followTrajectory(autoPath);
   }
 
   // This function is called periodically during autonomous.

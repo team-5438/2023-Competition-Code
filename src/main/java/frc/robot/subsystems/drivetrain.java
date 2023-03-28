@@ -33,6 +33,8 @@ import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.controller.RamseteController;
 
 import frc.robot.subsystems.Limelight;
 import frc.robot.Constants;
@@ -146,9 +148,7 @@ public class drivetrain extends SubsystemBase {
   {
     return new DifferentialDriveWheelSpeeds(
       frontLeft.getEncoder().getVelocity(),
-      backLeft.getEncoder().getVelocity(),
-      frontRight.getEncoder().getVelocity(),
-      backRight.getEncoder().getVelocity()
+      frontRight.getEncoder().getVelocity()
     );
   }
 
@@ -187,7 +187,7 @@ public class drivetrain extends SubsystemBase {
 	navxOffset = angle;
   }
 
-  public DifferentialDriveWheelVoltages OutputVolts()
+  public DifferentialDriveWheelVoltages OutputVolts() // EDIT THIS
   {
     return new DifferentialDriveWheelVoltages(frontLeft.getBusVoltage(), frontRight.getBusVoltage())
   }
@@ -199,12 +199,12 @@ public class drivetrain extends SubsystemBase {
       getPose(),
       
       new RamseteController(),
-      new SimpleMotorFeedforward(),
+      new SimpleMotorFeedforward(Constants.DrivekS, Constants.DrivekV, Constants.DrivekA), // CHANGE THESE
       Constants.kDriveKinematics,
-      getWheelSpeeds(),
-      new PIDController(4.5, 0, 0), // left CHANGE THESE LATER
-      new PIDController(5, 0, 0), // right CHANGE THESE LATER
-      OutputVolts(),
+      getWheelSpeeds(), // Fix: DifferentialDriveWheelSpeeds supplier
+      new PIDController(4.5, 0, 0), // left: CHANGE THESE LATER
+      new PIDController(5, 0, 0), // right: CHANGE THESE LATER
+      OutputVolts(), // Fix: voltage biconsumer
       true,
       this
     )
