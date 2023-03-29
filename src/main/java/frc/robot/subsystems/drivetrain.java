@@ -57,6 +57,11 @@ public class drivetrain extends SubsystemBase {
 
 	private AHRS navx;
 	private Rotation2d navxOffset;
+  
+  private double leftVoltage;
+  private double rightVoltage;
+
+  private TrajectoryFollower follower;
 
 	// define left and right side controller groups
 	MotorControllerGroup m_left = new MotorControllerGroup(frontLeft, backLeft);
@@ -83,6 +88,8 @@ public class drivetrain extends SubsystemBase {
 		navx.calibrate();
 
 		// Resets encoder in case counting has already begun.
+
+    
 	}
 
   // enable slew rate limiter
@@ -187,9 +194,12 @@ public class drivetrain extends SubsystemBase {
 	navxOffset = angle;
   }
 
-  public DifferentialDriveWheelVoltages OutputVolts() // EDIT THIS
+  BiConsumer<double, double> voltageConsumer = (leftVoltage, rightVoltage) -> 
   {
-    return new DifferentialDriveWheelVoltages(frontLeft.getBusVoltage(), frontRight.getBusVoltage())
+    double forwardSpeed = (leftVoltage + rightVoltage) / (2 * Constants.MAX_VOLTAGE);
+    double rotationSpeed = (leftVoltage - rightVoltage) / (2 * Constants.MAX_VOLTAGE);
+
+    drive.arcadeDrive(forwardSpeed, rotationSpeed);
   }
   
   public Command followTrajectory(PathPlannerTrajectory path)
@@ -202,9 +212,9 @@ public class drivetrain extends SubsystemBase {
       new SimpleMotorFeedforward(Constants.DrivekS, Constants.DrivekV, Constants.DrivekA), // CHANGE THESE
       Constants.kDriveKinematics,
       getWheelSpeeds(), // Fix: DifferentialDriveWheelSpeeds supplier
-      new PIDController(4.5, 0, 0), // left: CHANGE THESE LATER
-      new PIDController(5, 0, 0), // right: CHANGE THESE LATER
-      OutputVolts(), // Fix: voltage biconsumer
+      new PIDController(0.1, 0, 0), // left: CHANGE THESE LATER
+      new PIDController(0.1, 0, 0), // right: CHANGE THESE LATER
+      voltageConsumer, // Fix: voltage biconsumer
       true,
       this
     )

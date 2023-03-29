@@ -107,4 +107,6 @@ public final class Constants {
   public static final double DrivekS = 0;
   public static final double DrivekV = 0;
   public static final double DrivekA = 0;
+
+  public static double MAX_VOLTAGE = 11.8; // Change this
 }
