@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.*;
 
 import java.util.function.Supplier;
+import java.util.function.BiConsumer;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -26,19 +29,21 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.controller.DifferentialDriveWheelVoltages;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.trajectory.*;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C.Port;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.controller.RamseteController;
 
 import frc.robot.subsystems.Limelight;
 import frc.robot.Constants;
-
 
 import com.pathplanner.lib.commands.PPRamseteCommand;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -61,7 +66,7 @@ public class drivetrain extends SubsystemBase {
   private double leftVoltage;
   private double rightVoltage;
 
-  private TrajectoryFollower follower;
+  private RamseteController controller;
 
 	// define left and right side controller groups
 	MotorControllerGroup m_left = new MotorControllerGroup(frontLeft, backLeft);
@@ -88,7 +93,7 @@ public class drivetrain extends SubsystemBase {
 		navx.calibrate();
 
 		// Resets encoder in case counting has already begun.
-
+    
     
 	}
 
@@ -194,14 +199,21 @@ public class drivetrain extends SubsystemBase {
 	navxOffset = angle;
   }
 
-  BiConsumer<double, double> voltageConsumer = (leftVoltage, rightVoltage) -> 
+  public Trajectory convertPPtoWPI(String path)
+  {
+    return TrajectoryUtil.fromPathweaverJson(Paths.get(path));
+  }
+
+  BiConsumer<Double, Double> voltageConsumer = (leftVoltage, rightVoltage) -> 
   {
     double forwardSpeed = (leftVoltage + rightVoltage) / (2 * Constants.MAX_VOLTAGE);
     double rotationSpeed = (leftVoltage - rightVoltage) / (2 * Constants.MAX_VOLTAGE);
 
     drive.arcadeDrive(forwardSpeed, rotationSpeed);
   }
-  
+
+
+    
   public Command followTrajectory(PathPlannerTrajectory path)
   {
     return new PPRamseteCommand(

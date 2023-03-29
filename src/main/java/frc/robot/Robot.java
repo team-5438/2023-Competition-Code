@@ -22,8 +22,10 @@ import edu.wpi.first.apriltag.*;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
 import edu.wpi.first.math.controller.PIDController;
-import java.io.Console;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.trajectory.Trajectory;
 
 import com.fasterxml.jackson.databind.deser.AbstractDeserializer;
 import com.revrobotics.RelativeEncoder;
@@ -32,6 +34,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Encoder;
 import com.kauailabs.navx.frc.AHRS;
+
 
 import com.pathplanner.lib.*;
 
@@ -72,6 +75,7 @@ public class Robot extends TimedRobot {
   int num;
 
   public Robot() {
+    RamseteController ramseteController = new RamseteController();
   }
 
   /**
@@ -136,6 +140,9 @@ public class Robot extends TimedRobot {
      * block in order for anything in the Command-based framework to work.
      */
     CommandScheduler.getInstance().run();
+
+    Trajectory desiredTrajectory = drive.convertPPtoWPI("AutoPath.json");
+    //ChassisSpeeds chassisSpeeds = ramseteController.calculate(new Pose2d(), desiredTrajectory.sample(1), desiredTrajectory.sample(1).head());
   }
 
   // This function is called once each time the robot enters Disabled mode.
