@@ -141,7 +141,8 @@ public class Robot extends TimedRobot {
      */
     CommandScheduler.getInstance().run();
 
-    Trajectory desiredTrajectory = drive.convertPPtoWPI("AutoPath.json");
+    Trajectory desiredTrajectory = drive.convertPPtoWPI("src/main/deploy/pathplanner/
+                                                        AutoPath.json");
     //ChassisSpeeds chassisSpeeds = ramseteController.calculate(new Pose2d(), desiredTrajectory.sample(1), desiredTrajectory.sample(1).head());
   }
 

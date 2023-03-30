@@ -125,9 +125,6 @@ public class drivetrain extends SubsystemBase {
 		return (Encoder) frontLeft.getEncoder();
 	}
 
-	public class WheelSpeeds {
-	}
-
 	public double leftWheelSpeed() {
 		return getBackLeftEncoder().getRate();
 	}
