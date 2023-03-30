@@ -66,12 +66,15 @@ public class Robot extends TimedRobot {
 	public Arm arm;
 	Timer timer;
 
+  public AutoBalance autoBalance;
+  
   public AutonomousDrivetrain autodrive;
   public drivetrain drive;
   public AHRS gyro;
 
   public double currentVoltage;
   public double[] voltages;
+  public String PathFile;
   int num;
 
   public Robot() {
@@ -94,6 +97,7 @@ public class Robot extends TimedRobot {
     limelight = new Limelight();
     limelight.getValues();
     limelight.table.getInstance().startServer();
+    autoBalance = new AutoBalance(drive);
     // arm = new Arm();
 
     m_robotContainer = new RobotContainer(limelight);
@@ -141,8 +145,8 @@ public class Robot extends TimedRobot {
      */
     CommandScheduler.getInstance().run();
 
-    Trajectory desiredTrajectory = drive.convertPPtoWPI("src/main/deploy/pathplanner/
-                                                        AutoPath.json");
+    Trajectory desiredTrajectory = drive.convertPPtoWPI("src/main/deploy/pathplanner/" + 
+                                                        PathFile + ".json");
     //ChassisSpeeds chassisSpeeds = ramseteController.calculate(new Pose2d(), desiredTrajectory.sample(1), desiredTrajectory.sample(1).head());
   }
 
@@ -167,7 +171,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null)
       m_autonomousCommand.schedule();
 
-    PathPlannerTrajectory autoPath = PathPlanner.loadPath("AutoPath", new PathConstraints(4, 3));
+    PathPlannerTrajectory autoPath = PathPlanner.loadPath("src/main/deploy/pathplanner/AutoPath", new PathConstraints(4, 3));
     drive.followTrajectory(autoPath);
   }
 
@@ -182,6 +186,9 @@ public class Robot extends TimedRobot {
      * drive over charging stand
      * go back behind
      */
+
+    // IF PATHPLANNER DOES NOT WORK
+    // drive.arcadeDrive(2.9, 0);
   }
 
   @Override
