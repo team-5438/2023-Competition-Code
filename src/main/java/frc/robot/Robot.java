@@ -120,7 +120,8 @@ public class Robot extends TimedRobot {
     encoderFrontLeft.setPositionConversionFactor(1. / 256.);
     encoderFrontRight.setPositionConversionFactor(1. / 256.);
 
-    voltages = new double[100];
+    timer = new Timer();
+    timer.reset();
   }
 
   /**
@@ -173,6 +174,8 @@ public class Robot extends TimedRobot {
 
     PathPlannerTrajectory autoPath = PathPlanner.loadPath("src/main/deploy/pathplanner/AutoPath", new PathConstraints(4, 3));
     drive.followTrajectory(autoPath);
+
+    timer.start();
   }
 
   // This function is called periodically during autonomous.
@@ -188,7 +191,10 @@ public class Robot extends TimedRobot {
      */
 
     // IF PATHPLANNER DOES NOT WORK
-    // drive.arcadeDrive(2.9, 0);
+    //while(timer <= 3)
+    //{
+    //  drive.arcadeDrive(5, 0);
+    //}
   }
 
   @Override
