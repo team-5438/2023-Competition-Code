@@ -104,9 +104,11 @@ public final class Constants {
   public static final double FieldLengthMeters = Units.inchesToMeters(651.25);
   public static final double FieldWidthMeters = Units.inchesToMeters(315.5);
 
-  public static final double DrivekS = 0;
-  public static final double DrivekV = 0;
-  public static final double DrivekA = 0;
+  public static final double DrivekS = 1; // Minimum voltage to spin motors
+  public static final double DrivekV = 0; // volts per units/s to get desired velocity
+  public static final double DrivekA = 0; // volts per units/s^2 to get desired acceleration
 
   public static double MAX_VOLTAGE = 11.8; // Change this
+
+  // Volts range from 1-12
 }

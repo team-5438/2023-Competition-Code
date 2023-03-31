@@ -60,7 +60,8 @@ public class drivetrain extends SubsystemBase {
   public RelativeEncoder rightEncoder;
   private final AHRS gyro;
   public Robot robot = new Robot();
-  public double speed = 1;
+  public double AutoSpeed = 5;
+  public SimpleMotorFeedforward motorFeedForward;
 
   private AHRS navx;
   private Rotation2d navxOffset;
@@ -86,11 +87,13 @@ public class drivetrain extends SubsystemBase {
 
     leftEncoder = backLeft.getEncoder();
     rightEncoder = backRight.getEncoder();
+    motorFeedForward = new SimpleMotorFeedforward(Constants.DrivekS, 4, 6);
+    double maxAccel = motorFeedForward.maxAchievableAcceleration(Constants.MAX_VOLTAGE, 4);
+    motorFeedForward.calculate(4, 6);
 
     Port USBA1 = SerialPort.Port.kUSB1;
     
     navx = new AHRS(USBA1);
-
     gyro = new AHRS(Port.kMXP);
 
     navxOffset = new Rotation2d();
@@ -99,7 +102,6 @@ public class drivetrain extends SubsystemBase {
     navx.calibrate();
 
     // Resets encoder in case counting has already begun.
-
   }
 
   // enable slew rate limiter
@@ -212,21 +214,21 @@ public class drivetrain extends SubsystemBase {
     double forwardSpeed = (leftVoltage + rightVoltage) / (2 * Constants.MAX_VOLTAGE);
     double rotationSpeed = (leftVoltage - rightVoltage) / (2 * Constants.MAX_VOLTAGE);
 
-    drive.arcadeDrive(forwardSpeed, rotationSpeed);
+    // If pathplanner does not work, try removing the comment on this code.
+    //drive.arcadeDrive(forwardSpeed, rotationSpeed);
   }
 
   public Command followTrajectory(PathPlannerTrajectory path) {
     return new PPRamseteCommand(
         path,
         getPose(),
-
         new RamseteController(),
-        new SimpleMotorFeedforward(Constants.DrivekS, Constants.DrivekV, Constants.DrivekA), // CHANGE THESE
+        motorFeedForward,
         Constants.kDriveKinematics,
         WheelSpeedsSupplier(),
-        new PIDController(0.1, 0.01, 0.1), // left: CHANGE THESE LATER
-        new PIDController(0.1, 0.01, 0.1), // right: CHANGE THESE LATER
-        voltageConsumer, // Fix: voltage biconsumer
+        new PIDController(0.1, 0.01, 0.1), // left: PLACEHOLDERS
+        new PIDController(0.1, 0.01, 0.1), // right: PLACEHOLDERS
+        voltageConsumer,
         true,
         this);
   }
