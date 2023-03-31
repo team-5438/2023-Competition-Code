@@ -122,6 +122,7 @@ public class Robot extends TimedRobot {
 
     timer = new Timer();
     timer.reset();
+    PathFile = "AutoPath";
   }
 
   /**
@@ -146,8 +147,7 @@ public class Robot extends TimedRobot {
      */
     CommandScheduler.getInstance().run();
 
-    Trajectory desiredTrajectory = drive.convertPPtoWPI("src/main/deploy/pathplanner/" + 
-                                                        PathFile + ".json");
+    Trajectory desiredTrajectory = drive.convertPPtoWPI("src/main/deploy/pathplanner/" + PathFile + ".json");
     //ChassisSpeeds chassisSpeeds = ramseteController.calculate(new Pose2d(), desiredTrajectory.sample(1), desiredTrajectory.sample(1).head());
   }
 
@@ -172,9 +172,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null)
       m_autonomousCommand.schedule();
 
-    PathPlannerTrajectory autoPath = PathPlanner.loadPath("src/main/deploy/pathplanner/AutoPath", new PathConstraints(4, 3));
+    PathPlannerTrajectory autoPath = PathPlanner.loadPath("src/main/deploy/pathplanner/AutoPath", new PathConstraints(6, 4));
     drive.followTrajectory(autoPath);
-
     timer.start();
   }
 
@@ -183,18 +182,14 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     CommandScheduler.getInstance().run();
     // place object on L3 height
-    while (gyro.getAngle() < 180) {
-    }
-    /**
-     * drive over charging stand
-     * go back behind
-     */
 
-    // IF PATHPLANNER DOES NOT WORK
-    //while(timer <= 3)
-    //{
-    //  drive.arcadeDrive(5, 0);
-    //}
+    // IF PATHPLANNER DOES NOT WORK, TRY
+    // drive.followTrajectory(autoPath);
+    // or
+    // while(timer <= 3)
+    // {
+    //   drive.arcadeDrive(5, 0);
+    // }
   }
 
   @Override

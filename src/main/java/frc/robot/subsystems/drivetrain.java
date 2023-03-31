@@ -87,7 +87,8 @@ public class drivetrain extends SubsystemBase {
 
     leftEncoder = backLeft.getEncoder();
     rightEncoder = backRight.getEncoder();
-    motorFeedForward = new SimpleMotorFeedforward(Constants.DrivekS, 4, 6);
+    motorFeedForward = new SimpleMotorFeedforward(Constants.DrivekS, 4, 6); 
+    // Min voltage, volt for velocity, volt for Accel
     double maxAccel = motorFeedForward.maxAchievableAcceleration(Constants.MAX_VOLTAGE, 4);
     motorFeedForward.calculate(4, 6);
 
